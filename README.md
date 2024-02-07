@@ -16,7 +16,7 @@
 
 ## Tutorial de started
 
-[Link]()
+[Link](https://github.com/labens-ufrn/gestorlab-vue/blob/main/docs/started.md)
 
 ## Figma 
 
