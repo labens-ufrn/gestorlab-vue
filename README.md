@@ -1,24 +1,23 @@
 # gestorlab-vue
 
-## Project setup
-```
-yarn install
-```
+> GestorLAB - Web -Sistema de Gerenciamento de Conteúdo (CMS) Configurável para Laboratórios Acadêmicos. 
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Sobre
 
-### Compiles and minifies for production
-```
-yarn build
-```
+> O GestorLAB é uma inovadora ferramenta que visa aprimorar a gestão e organização de laboratórios acadêmicos. Desenvolvido sob a orientação do professor Taciano Silva de Morais, da UFRN campus Caicó, o projeto teve início como proposta de Trabalho de Conclusão de Curso (TCC) e está atualmente em fase de desenvolvimento beta.
 
-### Lints and fixes files
-```
-yarn lint
-```
+## Tecnologias
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- VUE 3
+- CSS
+- HTML
+- VUEX
+- VUE_ROUTER
+
+## Tutorial de started
+
+[Link]()
+
+## Figma 
+
+[Link](https://www.figma.com/file/dCI8MNw0ff3FUJw6GHBhW1/GestorLab?type=design&node-id=7%3A15&mode=dev&t=BvJ7x2rRVuCGmQEr-1)
