@@ -1,11 +1,7 @@
 <script setup lang="ts">
-// import { RouterLink, RouterView } from 'vue-router'
+import type { PersonInterface } from '@/types/Person';
 
-interface PersonInterface {
-  id: number,
-  name: string,
-  age: number,
-}
+// import { RouterLink, RouterView } from 'vue-router'
 
 let persons:Array<PersonInterface> = [
   {
