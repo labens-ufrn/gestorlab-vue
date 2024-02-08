@@ -2,12 +2,12 @@
 
 ## Passo 1:
 
-- ``` yarn install ``` ou ``` yarn ```
+- ``` npm i ``` ou ``` npm install ```
 
 ##  Passo 2:
 
-- ```yarn run serve```
+- ```npm run dev```
 
 
 ### Obs: 
-> Lembre-se que o yarn pode ser trocado pelo ```npm ```, assim teriamos: ``` npm isntall ``` e ``` npm run serve ```!
+> Lembre-se que o npm pode ser trocado pelo ```yarn```, vai da sua escolha!
