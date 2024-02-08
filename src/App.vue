@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h2>Vue with ts</h2>
+  <h1>Vue with ts</h1>
 </template>
 
 <style scoped>
