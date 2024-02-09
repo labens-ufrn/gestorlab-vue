@@ -23,7 +23,7 @@ let persons:Array<PersonInterface> = [
 </script>
 
 <template>
-  <PersonList :persons="persons"/>
+  <PersonList :persons="persons" />
 </template>
 
 <style scoped>
