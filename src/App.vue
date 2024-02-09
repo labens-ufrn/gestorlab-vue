@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PersonInterface } from '@/types/Person';
-
+import PersonList from './components/PersonList.vue';
 // import { RouterLink, RouterView } from 'vue-router'
 
 let persons:Array<PersonInterface> = [
@@ -23,12 +23,7 @@ let persons:Array<PersonInterface> = [
 </script>
 
 <template>
-  <h1>My list of users</h1>
-  <ul>
-    <li v-for="person in persons" :key="person.id">
-      {{ person.name }}
-    </li>
-  </ul>
+  <PersonList :persons="persons"/>
 </template>
 
 <style scoped>
