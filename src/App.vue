@@ -1,30 +1,26 @@
 <script setup lang="ts">
-import type { PersonInterface } from '@/types/Person';
-import PersonList from './components/PersonList.vue';
-// import { RouterLink, RouterView } from 'vue-router'
-
-let persons:Array<PersonInterface> = [
-  {
-    id: 1,
-    name: 'Jose',
-    age: 23
-  },
-  {
-    id: 2,
-    name: 'Maria',
-    age: 41
-  },
-  {
-    id: 3,
-    name: 'Danyélica',
-    age: 25
-  },
-];
+import { RouterView } from 'vue-router';
 </script>
 
 <template>
-  <PersonList :persons="persons" />
+  <header>
+    <img
+      src="./assets/imgs/GestorLAB (1).svg"
+      alt="logo"
+    >
+  </header>
+  <main>
+    <router-view />
+  </main>
 </template>
 
 <style scoped>
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 120px;
+  background-color: #1F2026;
+  border-bottom: 1px solid #333335;
+}
 </style>
