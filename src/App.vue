@@ -16,6 +16,8 @@ import { RouterView } from 'vue-router';
 
 <style scoped>
 header {
+  width: 100%;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: space-between;
