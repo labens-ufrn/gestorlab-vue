@@ -1,3 +1,23 @@
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #5621EF #03000d;
+}
+
+/* Barra de rolagem Edeg, Safira, GoogleChrome*/
+*::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: #03000d;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #5621EF;
+  border-radius: 1px;
+  border: 3px solid #5621EF;
+}
+
 html, body {
   height: 100%;
   width: 100%;
