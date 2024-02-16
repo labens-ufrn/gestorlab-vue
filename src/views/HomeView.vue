@@ -28,6 +28,51 @@
       </article>
     </div>
   </section>
+  <footer class="contaner-footer">
+    <div class="footer-one">
+      <img
+        src="../assets/imgs/logotipo_ufrn.svg"
+        alt="Logo tipo da UFRN"
+      >
+      <div class="box-social">
+        <a
+          href="http://"
+          target="_blank"
+        ><img
+          src="../assets/imgs/Group 1.svg"
+          alt=""
+        ></a>
+        <a
+          href="http://"
+          target="_blank"
+        ><img
+          src="../assets/imgs/Group 2.svg"
+          alt=""
+        ></a>
+        <a
+          href="http://"
+          target="_blank"
+        ><img
+          src="../assets/imgs/Group 3.svg"
+          alt=""
+        ></a>
+        <a
+          href="http://"
+          target="_blank"
+        ><img
+          src="../assets/imgs/Group 4.svg"
+          alt=""
+        ></a>
+      </div>
+    </div>
+    <hr style="width:100%;height: 1px;border: none; background-color: #333335;">
+    <div class="rules">
+      <p>Labens. Todos os direitos reservados.</p>
+      <button @click="()=>{}">
+        voltar ao topo
+      </button>
+    </div>
+  </footer>
 </template>
 
 <style scoped>
@@ -77,6 +122,54 @@
   font-size: 28px;
   line-height: 32px;
   font-weight: 500;
+}
 
+/* Footer */
+.contaner-footer {
+  padding: 100px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-one {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.box-social {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+a {
+  cursor: pointer;
+}
+
+.rules {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.rules p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.rules button {
+  padding: 10px;
+  border-radius: 10px;
+  border: 0.5px solid #fff;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: #fff;
 }
 </style>
