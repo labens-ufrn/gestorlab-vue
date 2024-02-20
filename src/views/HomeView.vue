@@ -28,6 +28,20 @@
       </article>
     </div>
   </section>
+  <section class="container-card">
+    <div class="container info-card">
+      <div class="card">
+        <p>
+          Crie seus projetos, adicione seus membros e apoiadores, monitore o desenvolvimento e produtividade de sua equipe de discentes. 
+        </p>
+        <p>E divulgue facilmente seus resultado ou acões em seu portifólio na web</p>
+      </div>
+      <img
+        src="../assets/imgs/functions.svg"
+        alt="Imagem de computador com varias funções abertas"
+      >
+    </div>
+  </section>
   <footer class="contaner-footer">
     <div class="footer-one">
       <img
@@ -101,7 +115,7 @@
 
 /* Section about */
 .container-about {
-  font-family: 'Roboto Slab', sans-serif;
+  font-family: 'Inter', sans-serif;
   padding: 160px 120px;
   border-bottom: 1px solid #333335;
 }
@@ -171,5 +185,34 @@ a {
   text-transform: uppercase;
   background-color: transparent;
   color: #fff;
+}
+
+/* Info card */
+.container-card {
+  font-family: 'Inter', sans-serif;
+  padding: 160px 120px;
+  border-bottom: 1px solid #333335;
+}
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+.card {
+  padding: 40px 40px;
+  border-radius: 18px;
+  background-color: #1F2026;
+  font-family: 'Inter', sans-serif;
+  max-width: 576px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 1.75rem;
+  line-height: 32px;
+  font-weight: bold;
+  gap: 32px;
+  box-shadow: 0px 4px 4px 0px rgba(86,33,239,1);
 }
 </style>
