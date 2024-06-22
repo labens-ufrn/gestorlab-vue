@@ -5,25 +5,29 @@
 <template>
   <section class="container-hero">
     <div class="container hero">
-      <p>Conheça o Gestor<strong>LAB</strong>:sua ferramenta ideal para simplificar a gestão do seu laboratório acadêmico!</p>
-      <img
-        src="../assets/imgs/cientis.svg"
-        alt="Imagem de cientista"
-      >
+      <p>
+        Conheça o Gestor<strong>LAB</strong>:sua ferramenta ideal para simplificar a gestão do seu laboratório
+        acadêmico!
+      </p>
+      <img src="../assets/imgs/cientis.svg" alt="Imagem de cientista">
     </div>
   </section>
   <section class="container-about">
     <div class="container about">
-      <img
-        src="../assets/imgs/studing.svg"
-        alt="Menina utilizando um notebook"
-      >
+      <img src="../assets/imgs/studing.svg" alt="Menina utilizando um notebook">
       <article>
         <p>
-          O GestorLAB é uma inovadora ferramenta que visa aprimorar a gestão e organização de laboratórios acadêmicos. Desenvolvido sob a orientação do professor Taciano Silva de Morais, da UFRN campus Caicó, o projeto teve início como proposta de Trabalho de Conclusão de Curso (TCC) e está atualmente em fase de desenvolvimento beta.
+          O GestorLAB é uma inovadora ferramenta que visa aprimorar a gestão e organização de laboratórios acadêmicos.
+          Desenvolvido sob a orientação do professor Taciano Silva de Morais, da UFRN campus Caicó, o projeto teve
+          início como proposta de Trabalho de Conclusão de Curso (TCC) e está atualmente em fase de desenvolvimento
+          beta.
         </p>
         <p>
-          A principal proposta do GestorLAB é fornecer aos laboratórios acadêmicos um portfólio online gratuito, destacando seus projetos, membros e apoiadores. A ferramenta é flexível, permitindo sua utilização por qualquer laboratório. Essa adaptabilidade é alcançada por meio da personalização de cores, permitindo que cada laboratório ajuste a interface conforme suas preferências. Além disso, são disponibilizados templates de tela específicos para a criação de portfólios online, facilitando a configuração e apresentação das informações.
+          A principal proposta do GestorLAB é fornecer aos laboratórios acadêmicos um portfólio online gratuito,
+          destacando seus projetos, membros e apoiadores. A ferramenta é flexível, permitindo sua utilização por
+          qualquer laboratório. Essa adaptabilidade é alcançada por meio da personalização de cores, permitindo que cada
+          laboratório ajuste a interface conforme suas preferências. Além disso, são disponibilizados templates de tela
+          específicos para a criação de portfólios online, facilitando a configuração e apresentação das informações.
         </p>
       </article>
     </div>
@@ -32,57 +36,28 @@
     <div class="container info-card">
       <div class="card">
         <p>
-          Crie seus projetos, adicione seus membros e apoiadores, monitore o desenvolvimento e produtividade de sua equipe de discentes. 
+          Crie seus projetos, adicione seus membros e apoiadores, monitore o desenvolvimento e produtividade de sua
+          equipe de discentes.
         </p>
-        <p>E divulgue facilmente seus resultado ou acões em seu portifólio na web</p>
+        <p>E divulgue facilmente seus resultados ou acões em seu portifólio na web!</p>
       </div>
-      <img
-        src="../assets/imgs/functions.svg"
-        alt="Imagem de computador com varias funções abertas"
-      >
+      <img src="../assets/imgs/functions.svg" alt="Imagem de computador com varias funções abertas">
     </div>
   </section>
   <footer class="contaner-footer">
-    <div class="footer-one">
-      <img
-        src="../assets/imgs/logotipo_ufrn.svg"
-        alt="Logo tipo da UFRN"
-      >
+    <div class="container footer-one">
+      <img src="../assets/imgs/logotipo_ufrn.svg" alt="Logo tipo da UFRN">
       <div class="box-social">
-        <a
-          href="http://"
-          target="_blank"
-        ><img
-          src="../assets/imgs/Group 1.svg"
-          alt=""
-        ></a>
-        <a
-          href="http://"
-          target="_blank"
-        ><img
-          src="../assets/imgs/Group 2.svg"
-          alt=""
-        ></a>
-        <a
-          href="http://"
-          target="_blank"
-        ><img
-          src="../assets/imgs/Group 3.svg"
-          alt=""
-        ></a>
-        <a
-          href="http://"
-          target="_blank"
-        ><img
-          src="../assets/imgs/Group 4.svg"
-          alt=""
-        ></a>
+        <a href="http://" target="_blank"><img src="../assets/imgs/Group 1.svg" alt=""></a>
+        <a href="http://" target="_blank"><img src="../assets/imgs/Group 2.svg" alt=""></a>
+        <a href="http://" target="_blank"><img src="../assets/imgs/Group 3.svg" alt=""></a>
+        <a href="http://" target="_blank"><img src="../assets/imgs/Group 4.svg" alt=""></a>
       </div>
     </div>
-    <hr style="width:100%;height: 1px;border: none; background-color: #333335;">
-    <div class="rules">
+    <hr class="container" style="width:100%;height: 1px;border: none; background-color: #333335;">
+    <div class="container rules">
       <p>Labens. Todos os direitos reservados.</p>
-      <button @click="()=>{}">
+      <button @click="() => { }">
         voltar ao topo
       </button>
     </div>
@@ -95,6 +70,7 @@
   padding: 220px 120px;
   border-bottom: 1px solid #333335;
 }
+
 .hero {
   display: flex;
   align-items: center;
@@ -104,13 +80,13 @@
 
 .hero p {
   max-width: 725px;
-  font-size:3.75rem;
+  font-size: 3.75rem;
   font-weight: 600;
   line-height: 60px;
 }
 
-.hero p strong{
-  color: #5621EF;
+.hero p strong {
+  color: #044FE0;
 }
 
 /* Section about */
@@ -193,6 +169,7 @@ a {
   padding: 160px 120px;
   border-bottom: 1px solid #333335;
 }
+
 .info-card {
   display: flex;
   align-items: center;
@@ -213,6 +190,6 @@ a {
   line-height: 32px;
   font-weight: bold;
   gap: 32px;
-  box-shadow: 0px 4px 4px 0px rgba(86,33,239,1);
+  box-shadow: 0px 4px 4px 0px #044FE0;
 }
 </style>
