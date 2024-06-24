@@ -20,7 +20,7 @@
 import FormLogin from './components/FormLogin.vue';
 import FormSignup from './components/FormSignup.vue';
 // variables
-const option: boolean = false;
+const option: boolean = true;
 </script>
 
 <style scoped>
@@ -47,7 +47,11 @@ const option: boolean = false;
     background-size: cover;
 }
 .form-signup {
-    padding: 70px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px;
     color: #fff;
     background-color: transparent;
     flex: 1;
