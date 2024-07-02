@@ -1,7 +1,52 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import API from '@/services/index';
+
+//Types
+interface Genero {
+  id: string;
+  title: string;
+}
+
+interface Permission {
+  id: string;
+  title: string;
+}
+
+// Variaveis
+const listGeneros = ref<Array<Genero>>();
+let selectGenero = ref<Genero>();
+const listPermissions = ref<Array<Permission>>();
+let selectPermission = ref<Permission>();
+// Eventos
 const emit = defineEmits(['event']);
 
-//functions
+//Functions
+onMounted(()=> {
+  getGeneros();
+  getPermissions();
+});
+
+async function getGeneros(){
+  try{
+    const response: any = await API.get('/generos');
+    listGeneros.value = response.data;
+    selectGenero.value = response.data[0];
+  }catch(e){
+    console.log(e);
+  }
+}
+
+async function getPermissions(){
+  try{
+    const response: any = await API.get('/permissoes');
+    listPermissions.value = response.data;
+    selectPermission.value = response.data[0];
+  }catch(e){
+    console.log(e);
+  }
+}
+
 function handleClickEmit(){
   const data = true;
   emit('event', data);
@@ -54,15 +99,14 @@ function handleClickEmit(){
         <select
           id="genero"
           name="genero"
+          v-model="selectGenero"
         >
-          <option value="masculino">
-            Masculino
-          </option>
-          <option value="feminino">
-            Feminino
-          </option>
-          <option value="outro">
-            Outro
+          <option
+            v-for="(item, index) in listGeneros"
+            :key="index"
+            :value="item"
+          >
+            {{ item.title }}
           </option>
         </select>
       </div>
@@ -82,15 +126,14 @@ function handleClickEmit(){
         <select
           id="cargo"
           name="cargo"
+          v-model="selectPermission"
         >
-          <option value="admin">
-            Admin
-          </option>
-          <option value="coordenador">
-            Coordenador
-          </option>
-          <option value="membro">
-            Membro
+          <option
+            v-for="(item, index) in listPermissions"
+            :key="index"
+            :value="item"
+          >
+            {{ item.title }}
           </option>
         </select>
       </div>
