@@ -10,9 +10,4 @@
       "jsdom"
     ]
   },
-  "include": [
-    "src/**/*.ts", // Incluir todos os arquivos TypeScript dentro de src
-    "src/**/*.tsx", // Se você estiver usando TSX
-    "src/services/index.ts" // Incluir explicitamente o index.ts aqui
-  ]
 }

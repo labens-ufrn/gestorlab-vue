@@ -13,9 +13,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.1.4",
     "axios": "^1.7.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.15",
+    "vue-cookies": "^1.8.4",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

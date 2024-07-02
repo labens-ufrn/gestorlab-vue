@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import API from '@/services/index';
+import { ArrowRightCircleIcon } from '@heroicons/vue/24/solid';
 
 //Types
 interface Genero {
@@ -54,10 +55,7 @@ function handleClickEmit(){
 </script>
 
 <template>
-  <form
-    action="/submit"
-    method="post"
-  >
+  <form>
     <div class="form-group">
       <label for="primeiro-nome">Primeiro nome</label>
       <input
@@ -171,6 +169,7 @@ function handleClickEmit(){
       class="button-card"
     >
       <p>Já tem cadastro?</p>
+      <ArrowRightCircleIcon class="icon" />
     </button>
   </form>
 </template>
@@ -222,6 +221,7 @@ input, select {
 }
 .button-card {
   width: 100%;
+  justify-content: space-between;
   border: none;
   cursor: pointer;
   border-radius: 10px;
@@ -231,6 +231,12 @@ input, select {
   font-size: 0.8rem;
   font-weight: 600;
   background-color: #18191C;
+  color: #fff;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
   color: #fff;
 }
 </style>

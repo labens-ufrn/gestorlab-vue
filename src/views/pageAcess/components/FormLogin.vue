@@ -1,18 +1,57 @@
 <script setup lang="ts">
+import {ref} from 'vue';
+import { ArrowRightCircleIcon } from '@heroicons/vue/24/solid';
+import API from '@/services/index';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+//Variaveis
+let username = ref<string>();
+let password = ref<string>();
+
+//Eventos
 const emit = defineEmits(['event']);
 
-//functions
+//Functions
 function handleClickEmit(){
   const data = false;
   emit('event', data);
 }
+
+function handleRouter() {
+  router.push('/dashboard');
+}
+
+async function login() {
+  console.log('entrei');
+  console.log(username.value);
+  console.log(password.value);
+  try {
+    const formData = new FormData();
+    formData.append('username', username.value || '');
+    formData.append('password', password.value || '');
+
+    const response = await API.post('/usuarios/login', formData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    const token = response.data.access_token;
+    document.cookie = token;
+    console.log('cookie:', document.cookie);
+    handleRouter();
+  } catch (e) {
+    console.error('Erro ao fazer login', e);
+  }
+}
 </script>
 
 <template>
-  <form action="">
+  <form>
     <div class="form-group">
       <label for="username">E-mail</label>
       <input
+        v-model="username"
         placeholder="digite seu e-email"
         type="text"
         id="username"
@@ -23,6 +62,7 @@ function handleClickEmit(){
     <div class="form-group">
       <label for="username">Senha</label>
       <input
+        v-model="password"
         placeholder="digite sua senha"
         type="text"
         id="username"
@@ -32,7 +72,7 @@ function handleClickEmit(){
     </div>
     <a href="">Esqueceu sua senha?</a>
     <button
-      @click="()=>{}"
+      @click.prevent="login()"
       class="button-login"
     >
       <p>Entrar</p>
@@ -42,6 +82,7 @@ function handleClickEmit(){
       class="button-card"
     >
       <p>Cadastre-se gratuitamente!</p>
+      <ArrowRightCircleIcon class="icon" />
     </button>
   </form>
 </template>
@@ -104,6 +145,7 @@ input, select {
   width: 100%;
   border: none;
   cursor: pointer;
+  justify-content: space-between;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -111,6 +153,12 @@ input, select {
   font-size: 0.8rem;
   font-weight: 600;
   background-color: #18191C;
+  color: #fff;
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
   color: #fff;
 }
 </style>
