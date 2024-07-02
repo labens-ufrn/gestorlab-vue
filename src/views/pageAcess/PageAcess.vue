@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import API from '@/services/index';
 import { ref } from 'vue';
 import FormLogin from './components/FormLogin.vue';
 import FormSignup from './components/FormSignup.vue';
@@ -36,12 +35,6 @@ defineEmits(['event']);
 //function
 async function receiveEvent(data: boolean){
   option.value = data;
-  try{
-    const response: any = await API.get('/usuarios');
-    console.log(response);
-  }catch(e){
-    console.log(e);
-  }
 }
 </script>
 
