@@ -3,24 +3,39 @@
     <div class="signup">
       <div class="banner" />
       <div class="form-signup">
-        <p v-show="option">
-          Cadastre-se gratuitamente
-        </p>
-        <p v-show="!option">
+        <p v-if="option">
           Acesse sua conta
         </p>
-        <FormSignup v-show="option" />
-        <FormLogin v-show="!option" />
+        <p v-else>
+          Cadastre-se gratuitamente
+        </p>
+        <FormLogin
+          v-if="option"
+          @event="receiveEvent"
+        />
+        <FormSignup
+          @event="receiveEvent"
+          v-else
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import FormLogin from './components/FormLogin.vue';
 import FormSignup from './components/FormSignup.vue';
 // variables
-const option: boolean = true;
+let option = ref(true);
+
+// definição de eventos
+defineEmits(['event']);
+
+//function
+function receiveEvent(data: boolean){
+  option.value = data;
+}
 </script>
 
 <style scoped>

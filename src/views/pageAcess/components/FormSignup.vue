@@ -1,5 +1,11 @@
 <script setup lang="ts">
+const emit = defineEmits(['event']);
 
+//functions
+function handleClickEmit(){
+  const data = true;
+  emit('event', data);
+}
 </script>
 
 <template>
@@ -117,6 +123,12 @@
     >
       Cadastrar
     </button>
+    <button
+      @click.prevent="handleClickEmit()"
+      class="button-card"
+    >
+      <p>Já tem cadastro?</p>
+    </button>
   </form>
 </template>
 
@@ -164,5 +176,18 @@ input, select {
   background-color: #044FE0;
   border-radius: 10px;
   width: 100%;
+}
+.button-card {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #18191C;
+  color: #fff;
 }
 </style>
