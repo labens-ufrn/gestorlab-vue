@@ -15,7 +15,6 @@ const routes = [
     name: 'signup',
     component: PageAcess,
   },
-  // Exemplo de rota que requer autenticação
   {
     path: '/dashboard',
     name: 'dashboard',
@@ -30,7 +29,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  // Verificar se a rota requer autenticação
   if (to.matched.some(record => record.meta.requiresAuth)) {
     const token = window.document.cookie;
 
@@ -38,7 +36,6 @@ router.beforeEach(async (to, from, next) => {
       next('/signup');
     } else {
       try {
-        // Substitua pela sua chamada de verificação de token
         await API.get('/usuarios/auth', {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -46,7 +43,6 @@ router.beforeEach(async (to, from, next) => {
         });
         next();
       } catch (error) {
-        // Token inválido ou expirado
         window.document.cookie = '';
         next('/signup');
       }
