@@ -19,6 +19,18 @@ export const authStore = defineStore('auth', {
       } catch (err) {
         return false;
       }
+    },
+    async authAutenticate(token: string) {
+      try {
+        await API.get('/usuarios/auth', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        return true;
+      } catch (error) {
+        return true;
+      }
     }
   }
 });

@@ -23,9 +23,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import FormLogin from './components/FormLogin.vue';
 import FormSignup from './components/FormSignup.vue';
+import { authStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
+
+// Gerencia de estado
+const auth = authStore();
+
+// Navegação
+const router = useRouter();
+
 // variables
 let option = ref(true);
 
@@ -33,6 +42,22 @@ let option = ref(true);
 defineEmits(['event']);
 
 //function
+onBeforeMount(async()=> {
+  const token = window.document.cookie;
+  if (token && token !== '') {
+    const response:Boolean = await auth.authAutenticate(token);
+    if(response){
+      handleRouter();
+    }else {
+      return;
+    }
+  }
+});
+
+function handleRouter() {
+  router.push('/dashboard');
+}
+
 async function receiveEvent(data: boolean){
   option.value = data;
 }
