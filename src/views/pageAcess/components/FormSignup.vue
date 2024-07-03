@@ -2,17 +2,7 @@
 import { ref, onMounted } from 'vue';
 import API from '@/services/index';
 import { ArrowRightCircleIcon } from '@heroicons/vue/24/solid';
-
-//Types
-interface Genero {
-  id: string;
-  title: string;
-}
-
-interface Permission {
-  id: string;
-  title: string;
-}
+import { Genero, Permission } from '@/types';
 
 // Variaveis
 const listGeneros = ref<Array<Genero>>();
@@ -55,7 +45,7 @@ function handleClickEmit(){
 </script>
 
 <template>
-  <form>
+  <form @submit.prevent="">
     <div class="form-group">
       <label for="primeiro-nome">Primeiro nome</label>
       <input
@@ -141,6 +131,7 @@ function handleClickEmit(){
       <div class="form-group">
         <label for="senha">Senha</label>
         <input
+          class="password"
           type="password"
           id="senha"
           name="senha"
@@ -150,6 +141,7 @@ function handleClickEmit(){
       <div class="form-group">
         <label for="confirm-senha">Confirma senha</label>
         <input
+          class="password"
           type="password"
           id="confirm-senha"
           name="confirm-senha"
@@ -204,9 +196,14 @@ input, select {
   width: 100%;
   color: #fff;
   padding: 12px 16px;
+  padding-left: 8px;
   background-color: #18191C;
   border-radius: 10px;
   border: #333335 solid 1px;
+}
+
+.password {
+  padding-right: 30px;
 }
 .button-save {
   cursor: pointer;

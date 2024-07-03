@@ -56,10 +56,11 @@ async function receiveEvent(data: boolean){
 }
 
 .banner {
-    height: 100%;
-    flex: 3;
     background-image: url('./assets/img-logo-tipo.svg');
+    flex: 3;
     background-size: cover;
+    background-position: center; /* Centraliza a imagem de fundo */
+    background-repeat: no-repeat; /* Garante que a imagem de fundo não se repita */
 }
 .form-signup {
     overflow-y: scroll;
@@ -77,5 +78,17 @@ async function receiveEvent(data: boolean){
     font-size: 1.2rem;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
+}
+
+@media (max-width: 1400px) {
+  .banner {
+    flex: 2;
+  }
+}
+
+@media (max-width: 1150px) {
+  .banner {
+    display: none;
+  }
 }
 </style>

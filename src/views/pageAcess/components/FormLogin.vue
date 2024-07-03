@@ -23,9 +23,6 @@ function handleRouter() {
 }
 
 async function login() {
-  console.log('entrei');
-  console.log(username.value);
-  console.log(password.value);
   try {
     const formData = new FormData();
     formData.append('username', username.value || '');
@@ -38,7 +35,6 @@ async function login() {
     });
     const token = response.data.access_token;
     document.cookie = token;
-    console.log('cookie:', document.cookie);
     handleRouter();
   } catch (e) {
     console.error('Erro ao fazer login', e);
@@ -47,7 +43,7 @@ async function login() {
 </script>
 
 <template>
-  <form>
+  <form @submit.prevent="login()">
     <div class="form-group">
       <label for="username">E-mail</label>
       <input
@@ -72,7 +68,7 @@ async function login() {
     </div>
     <a href="">Esqueceu sua senha?</a>
     <button
-      @click.prevent="login()"
+      type="submit"
       class="button-login"
     >
       <p>Entrar</p>

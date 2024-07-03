@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createRouter, createWebHistory } from 'vue-router';
 import API from '@/services/index';
 import HomeViewVue from '@/views/home/HomeView.vue';
@@ -14,7 +13,7 @@ const routes = [
   {
     path: '/signup',
     name: 'signup',
-    component: PageAcess
+    component: PageAcess,
   },
   // Exemplo de rota que requer autenticação
   {
@@ -40,7 +39,7 @@ router.beforeEach(async (to, from, next) => {
     } else {
       try {
         // Substitua pela sua chamada de verificação de token
-        await API.get('/usuarios/logado', {
+        await API.get('/usuarios/auth', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
