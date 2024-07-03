@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import { ArrowRightCircleIcon } from '@heroicons/vue/24/solid';
-import API from '@/services/index';
+import { authStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
+
+// Gerencia de estado
+const auth = authStore();
+
+//Router
 const router = useRouter();
 
 //Variaveis
@@ -23,21 +28,16 @@ function handleRouter() {
 }
 
 async function login() {
-  try {
-    const formData = new FormData();
-    formData.append('username', username.value || '');
-    formData.append('password', password.value || '');
+  const formData = new FormData();
+  formData.append('username', username.value || '');
+  formData.append('password', password.value || '');
 
-    const response = await API.post('/usuarios/login', formData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    });
-    const token = response.data.access_token;
-    document.cookie = token;
+  const response: boolean = await auth.authLogin(formData);
+  
+  if (response){
     handleRouter();
-  } catch (e) {
-    console.error('Erro ao fazer login', e);
+  } else {
+    alert('Senha ou E-mail invalidos!');
   }
 }
 </script>
