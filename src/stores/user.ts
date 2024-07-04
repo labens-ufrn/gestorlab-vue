@@ -8,7 +8,6 @@ export const userStore = defineStore('user', {
 
   actions: {
     async createUser(usuario: any) {
-      console.log(usuario);
       try {
         const response = await API.post('/usuarios/signup', {
           primeiro_nome: usuario.primeiro_nome,
