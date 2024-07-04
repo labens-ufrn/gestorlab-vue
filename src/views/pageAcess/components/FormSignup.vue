@@ -2,13 +2,25 @@
 import { ref, onMounted } from 'vue';
 import API from '@/services/index';
 import { ArrowRightCircleIcon } from '@heroicons/vue/24/solid';
-import { Genero, Permission } from '@/types';
+import { Genero, Permission, Usuario } from '@/types';
+import {userStore} from '@/stores/user';
 
+// gerencia de estado
+const user = userStore();
 // Variaveis
 const listGeneros = ref<Array<Genero>>();
 let selectGenero = ref<Genero>();
 const listPermissions = ref<Array<Permission>>();
 let selectPermission = ref<Permission>();
+
+let matricula = ref<Number>();
+let tel = ref<Number>();
+let primeiro_nome = ref<String>();
+let segundo_nome = ref<String>();
+let email = ref<String>();
+let data_nascimento = ref<String>();
+let senha = ref<String>();
+
 // Eventos
 const emit = defineEmits(['event']);
 
@@ -42,13 +54,36 @@ function handleClickEmit(){
   const data = true;
   emit('event', data);
 }
+
+async function signup(){
+  const object: Usuario = {
+    primeiro_nome: primeiro_nome.value,
+    segundo_nome: segundo_nome.value,
+    data_nascimento: data_nascimento.value,
+    genero: selectGenero.value.id,
+    email: email.value,
+    matricula: Number(matricula.value),
+    tel: Number(tel.value),
+    senha: senha.value,
+    permissoes: [selectPermission.value.id]
+  };
+  const response = await user.createUser(object);
+  if(response === true){
+    alert('Usuário criado com sucesso!');
+    handleClickEmit();
+  } else {
+    alert(response);
+  }
+  
+}
 </script>
 
 <template>
-  <form @submit.prevent="">
+  <form @submit.prevent="signup()">
     <div class="form-group">
       <label for="primeiro-nome">Primeiro nome</label>
       <input
+        v-model="primeiro_nome"
         type="text"
         id="primeiro-nome"
         name="primeiro-nome"
@@ -58,6 +93,7 @@ function handleClickEmit(){
     <div class="form-group">
       <label for="segundo-nome">Segundo nome</label>
       <input
+        v-model="segundo_nome"
         type="text"
         id="segundo-nome"
         name="segundo-nome"
@@ -65,8 +101,19 @@ function handleClickEmit(){
       >
     </div>
     <div class="form-group">
+      <label for="matricula">Matricula</label>
+      <input
+        v-model="matricula"
+        type="text"
+        id="matricula"
+        name="matricula"
+        required
+      >
+    </div>
+    <div class="form-group">
       <label for="email">E-mail</label>
       <input
+        v-model="email"
         type="email"
         id="email"
         name="email"
@@ -77,6 +124,7 @@ function handleClickEmit(){
       <div class="form-group">
         <label for="">Data de nascimento</label>
         <input
+          v-model="data_nascimento"
           type="date"
           id="date"
           name="date"
@@ -103,6 +151,8 @@ function handleClickEmit(){
       <div class="form-group">
         <label for="telefone">Telefone</label>
         <input
+          v-model="tel"
+          required
           type="tel"
           id="telefone"
           name="telefone"
@@ -131,6 +181,7 @@ function handleClickEmit(){
       <div class="form-group">
         <label for="senha">Senha</label>
         <input
+          v-model="senha"
           class="password"
           type="password"
           id="senha"
