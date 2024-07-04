@@ -14,7 +14,7 @@ export const authStore = defineStore('auth', {
           }
         });
         const token = response.data.access_token;
-        document.cookie = token;
+        window.document.cookie = token;
         return true;
       } catch (err) {
         return false;
