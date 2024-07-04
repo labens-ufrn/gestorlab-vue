@@ -36,7 +36,7 @@ async function getGeneros(){
     listGeneros.value = response.data;
     selectGenero.value = response.data[0];
   }catch(e){
-    console.log(e);
+    alert(e);
   }
 }
 
@@ -46,7 +46,7 @@ async function getPermissions(){
     listPermissions.value = response.data;
     selectPermission.value = response.data[0];
   }catch(e){
-    console.log(e);
+    alert(e);
   }
 }
 
