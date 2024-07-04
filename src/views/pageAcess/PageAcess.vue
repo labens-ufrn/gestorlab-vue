@@ -43,8 +43,8 @@ defineEmits(['event']);
 
 //function
 onBeforeMount(async()=> {
-  const token = window.document.cookie;
-  if (token && token !== '') {
+  let token = window.document.cookie;
+  if (token && token !== 'null') {
     const response:Boolean = await auth.authAutenticate(token);
     if(response){
       handleRouter();
