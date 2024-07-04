@@ -32,7 +32,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     const token = window.document.cookie;
 
-    if (!token || token === '') {
+    if (!token || token === 'null') {
       next('/signup');
     } else {
       try {
