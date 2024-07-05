@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import API from '@/services/index';
 import { ArrowRightCircleIcon } from '@heroicons/vue/24/solid';
 import { Genero, Permission, Usuario } from '@/types';
+import {removerCaracter} from '@/utils';
 import {userStore} from '@/stores/user';
 
 // gerencia de estado
@@ -13,8 +14,8 @@ let selectGenero = ref<Genero>();
 const listPermissions = ref<Array<Permission>>();
 let selectPermission = ref<Permission>();
 
-let matricula = ref<Number>();
-let tel = ref<Number>();
+let matricula = ref<String>();
+let tel = ref<String>();
 let primeiro_nome = ref<String>();
 let segundo_nome = ref<String>();
 let email = ref<String>();
@@ -62,11 +63,12 @@ async function signup(){
     data_nascimento: data_nascimento.value,
     genero: selectGenero.value.id,
     email: email.value,
-    matricula: Number(matricula.value),
-    tel: Number(tel.value),
+    matricula: removerCaracter(matricula.value),
+    tel: removerCaracter(tel.value),
     senha: senha.value,
     permissoes: [selectPermission.value.id]
   };
+  console.log(object);
   const response = await user.createUser(object);
   if(response === true){
     alert('Usuário criado com sucesso!');
