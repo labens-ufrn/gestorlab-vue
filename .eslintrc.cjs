@@ -4,7 +4,7 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 module.exports = {
   root: true,
   'extends': [
-    'plugin:vue/vue3-strongly-recommended', 
+    'plugin:vue/vue3-strongly-recommended',
     'eslint:recommended',
     '@vue/eslint-config-typescript'
   ],
@@ -15,6 +15,6 @@ module.exports = {
     semi: ['error', 'always'],
     quotes: ['error', 'single'],
     indent: ['error', 2],
-    'comma-spacing': ['error', {before: false, after: true}],
+    'comma-spacing': ['error', { before: false, after: true }],
   }
 };
