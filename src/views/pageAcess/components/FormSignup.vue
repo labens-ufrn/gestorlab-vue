@@ -36,7 +36,7 @@ async function getGeneros(){
     listGeneros.value = response.data;
     selectGenero.value = response.data[0];
   }catch(e){
-    alert(e);
+    return;
   }
 }
 
@@ -46,7 +46,7 @@ async function getPermissions(){
     listPermissions.value = response.data;
     selectPermission.value = response.data[0];
   }catch(e){
-    alert(e);
+    return;
   }
 }
 
@@ -87,6 +87,7 @@ async function signup(){
         type="text"
         id="primeiro-nome"
         name="primeiro-nome"
+        placeholder="digite seu primeiro nome"
         required
       >
     </div>
@@ -95,6 +96,7 @@ async function signup(){
       <input
         v-model="segundo_nome"
         type="text"
+        placeholder="digite seu segundo nome"
         id="segundo-nome"
         name="segundo-nome"
         required
@@ -104,6 +106,8 @@ async function signup(){
       <label for="matricula">Matricula</label>
       <input
         v-model="matricula"
+        v-mask="'###########'"
+        placeholder="digite sua matricula"
         type="text"
         id="matricula"
         name="matricula"
@@ -114,6 +118,7 @@ async function signup(){
       <label for="email">E-mail</label>
       <input
         v-model="email"
+        placeholder="digite seu e-mail"
         type="email"
         id="email"
         name="email"
@@ -152,11 +157,12 @@ async function signup(){
         <label for="telefone">Telefone</label>
         <input
           v-model="tel"
+          v-mask="['(##) ####-####', '(##) #####-####']"
           required
           type="tel"
           id="telefone"
           name="telefone"
-          placeholder="00-00000-0000"
+          placeholder="(00) 09939-0000"
         >
       </div>
       <div class="form-group">
@@ -184,6 +190,7 @@ async function signup(){
           v-model="senha"
           class="password"
           type="password"
+          placeholder="senha"
           id="senha"
           name="senha"
           required
@@ -194,6 +201,7 @@ async function signup(){
         <input
           class="password"
           type="password"
+          placeholder="confirme sua senha"
           id="confirm-senha"
           name="confirm-senha"
           required
