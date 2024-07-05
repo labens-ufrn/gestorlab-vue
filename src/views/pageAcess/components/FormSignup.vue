@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import API from '@/services/index';
 import { ArrowRightCircleIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid';
 import { Genero, Permission, Usuario } from '@/types';
@@ -20,13 +20,25 @@ let segundo_nome = ref<String>();
 let email = ref<String>();
 let data_nascimento = ref<String>();
 let senha = ref<String>();
+let confirmPassword = ref<String>();
 
 let visible = ref<boolean>(true);
 let confirmVisible = ref<boolean>(true);
+let errorPassword = ref<boolean>(false);
 
 // Eventos
 const emit = defineEmits(['event']);
 
+watch(confirmPassword, (newPassword) => {
+  if(senha.value !== '' && senha.value !== undefined && senha.value !== null){
+    if(newPassword !== senha.value){
+      errorPassword.value = true;
+    } else {
+      errorPassword.value = false;
+    }
+  }
+ 
+});
 //Functions
 onMounted(()=> {
   getGeneros();
@@ -70,7 +82,6 @@ async function signup(){
     senha: senha.value,
     permissoes: [selectPermission.value.id]
   };
-  console.log(object);
   const response = await user.createUser(object);
   if(response === true){
     alert('Usuário criado com sucesso!');
@@ -187,65 +198,73 @@ async function signup(){
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label for="senha">Senha</label>
-        <div class="password-input">
-          <input
-            v-model="senha"
-            class="password"
-            :type="visible ? 'password' : 'text'"
-            placeholder="senha"
-            id="senha"
-            name="senha"
-            required
-          >
-          <span
-            class="eye"
-            @click="visible=!visible"
-          >
-            <EyeSlashIcon
-              v-if="visible"
-              class="icon-password"
-            />
-            <EyeIcon
-              v-else
-              class="icon-password"
-            />
-          </span>
+    <div class="form-colunm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <div class="password-input">
+            <input
+              v-model="senha"
+              class="password"
+              :type="visible ? 'password' : 'text'"
+              placeholder="senha"
+              id="senha"
+              name="senha"
+              required
+            >
+            <span
+              class="eye"
+              @click="visible=!visible"
+            >
+              <EyeSlashIcon
+                v-if="visible"
+                class="icon-password"
+              />
+              <EyeIcon
+                v-else
+                class="icon-password"
+              />
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="confirm-senha">Confirma senha</label>
+          <div class="password-input">
+            <input
+              v-model="confirmPassword"
+              class="password"
+              :type="confirmVisible? 'password' : 'text'"
+              placeholder="confirme sua senha"
+              id="confirm-senha"
+              name="confirm-senha"
+              required
+            >
+            <span
+              class="eye"
+              @click="confirmVisible=!confirmVisible"
+            >
+              <EyeSlashIcon
+                v-if="confirmVisible"
+                class="icon-password"
+              />
+              <EyeIcon
+                v-else
+                class="icon-password"
+              />
+            </span>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="confirm-senha">Confirma senha</label>
-        <div class="password-input">
-          <input
-            class="password"
-            :type="confirmVisible? 'password' : 'text'"
-            placeholder="confirme sua senha"
-            id="confirm-senha"
-            name="confirm-senha"
-            required
-          >
-          <span
-            class="eye"
-            @click="confirmVisible=!confirmVisible"
-          >
-            <EyeSlashIcon
-              v-if="confirmVisible"
-              class="icon-password"
-            />
-            <EyeIcon
-              v-else
-              class="icon-password"
-            />
-          </span>
-        </div>
-      </div>
+      <span
+        class="error"
+        v-if="errorPassword"
+      >As senhas não são iguais!</span>
     </div>
     <button
-      class="button-save"
+      :class="errorPassword ? 'button-save-disabled': 'button-save'"
       name="button-save"
       type="submit"
+      :disabled="errorPassword ? true : false"
     >
       Cadastrar
     </button>
@@ -278,6 +297,13 @@ form {
   gap: 10px;
 }
 
+.form-colunm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 4px;
+}
+
 .form-group {
   display: flex;
   gap: 6px;
@@ -298,6 +324,7 @@ input, select {
 .password {
   padding-right: 30px;
 }
+
 .button-save {
   cursor: pointer;
   border: none;
@@ -306,6 +333,17 @@ input, select {
   font-size: 0.8rem;
   font-weight: 700;
   background-color: #044FE0;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.button-save-disabled{
+  border: none;
+  padding: 12px 16px;
+  color: #938f8f;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background-color: #0e2d6c;
   border-radius: 10px;
   width: 100%;
 }
@@ -328,5 +366,13 @@ input, select {
   width: 20px;
   height: 20px;
   color: #fff;
+}
+
+.error {
+  width: 100%;
+  font-size: 0.6rem;
+  color: red;
+  font-weight: 800;
+  font-style: italic;
 }
 </style>
