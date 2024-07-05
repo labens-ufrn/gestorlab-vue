@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from 'vue';
-import { ArrowRightCircleIcon } from '@heroicons/vue/24/solid';
+import { ArrowRightCircleIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid';
 import { authStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 
@@ -13,6 +13,7 @@ const router = useRouter();
 //Variaveis
 let username = ref<string>();
 let password = ref<string>();
+let visible = ref<boolean>(true);
 
 //Eventos
 const emit = defineEmits(['event']);
@@ -56,15 +57,31 @@ async function login() {
       >
     </div>
     <div class="form-group">
-      <label for="username">Senha</label>
-      <input
-        v-model="password"
-        placeholder="digite sua senha"
-        type="text"
-        id="username"
-        name="username"
-        required
-      >
+      <label for="password">Senha</label>
+      <div class="password-input">
+        <input
+          v-model="password"
+          class="password"
+          :type="visible ? 'password' : 'text'"
+          placeholder="senha"
+          id="senha"
+          name="senha"
+          required
+        >
+        <span
+          class="eye"
+          @click="visible=!visible"
+        >
+          <EyeSlashIcon
+            v-if="visible"
+            class="icon-password"
+          />
+          <EyeIcon
+            v-else
+            class="icon-password"
+          />
+        </span>
+      </div>
     </div>
     <a href="">Esqueceu sua senha?</a>
     <button

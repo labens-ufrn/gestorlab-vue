@@ -40,3 +40,24 @@ a {
   margin: 0px auto;
   max-width: 1930px;
 }
+
+.password-input {
+  position: relative;
+  align-items: center;
+  width: 100%;
+  display: inline-block;
+}
+
+.eye {
+  position: absolute;
+  top: 53%;
+  right: 8px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.icon-password {
+  width: 16px;
+  height: 16px;
+  color: #fff;
+}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import API from '@/services/index';
-import { ArrowRightCircleIcon } from '@heroicons/vue/24/solid';
+import { ArrowRightCircleIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid';
 import { Genero, Permission, Usuario } from '@/types';
 import {removerCaracter} from '@/utils';
 import {userStore} from '@/stores/user';
@@ -13,7 +13,6 @@ const listGeneros = ref<Array<Genero>>();
 let selectGenero = ref<Genero>();
 const listPermissions = ref<Array<Permission>>();
 let selectPermission = ref<Permission>();
-
 let matricula = ref<String>();
 let tel = ref<String>();
 let primeiro_nome = ref<String>();
@@ -21,6 +20,9 @@ let segundo_nome = ref<String>();
 let email = ref<String>();
 let data_nascimento = ref<String>();
 let senha = ref<String>();
+
+let visible = ref<boolean>(true);
+let confirmVisible = ref<boolean>(true);
 
 // Eventos
 const emit = defineEmits(['event']);
@@ -188,26 +190,56 @@ async function signup(){
     <div class="form-row">
       <div class="form-group">
         <label for="senha">Senha</label>
-        <input
-          v-model="senha"
-          class="password"
-          type="password"
-          placeholder="senha"
-          id="senha"
-          name="senha"
-          required
-        >
+        <div class="password-input">
+          <input
+            v-model="senha"
+            class="password"
+            :type="visible ? 'password' : 'text'"
+            placeholder="senha"
+            id="senha"
+            name="senha"
+            required
+          >
+          <span
+            class="eye"
+            @click="visible=!visible"
+          >
+            <EyeSlashIcon
+              v-if="visible"
+              class="icon-password"
+            />
+            <EyeIcon
+              v-else
+              class="icon-password"
+            />
+          </span>
+        </div>
       </div>
       <div class="form-group">
         <label for="confirm-senha">Confirma senha</label>
-        <input
-          class="password"
-          type="password"
-          placeholder="confirme sua senha"
-          id="confirm-senha"
-          name="confirm-senha"
-          required
-        >
+        <div class="password-input">
+          <input
+            class="password"
+            :type="confirmVisible? 'password' : 'text'"
+            placeholder="confirme sua senha"
+            id="confirm-senha"
+            name="confirm-senha"
+            required
+          >
+          <span
+            class="eye"
+            @click="confirmVisible=!confirmVisible"
+          >
+            <EyeSlashIcon
+              v-if="confirmVisible"
+              class="icon-password"
+            />
+            <EyeIcon
+              v-else
+              class="icon-password"
+            />
+          </span>
+        </div>
       </div>
     </div>
     <button
