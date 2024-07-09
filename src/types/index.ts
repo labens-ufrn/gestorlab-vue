@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-interface Genero {
+export interface Genero {
   id: string;
   title: string;
 }
 
-interface Permission {
+export interface Permission {
   id: string;
   title: string;
 }

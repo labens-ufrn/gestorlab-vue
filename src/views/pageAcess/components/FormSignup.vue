@@ -2,7 +2,7 @@
 import { ref, onMounted, watch } from 'vue';
 import API from '@/services/index';
 import { ArrowRightCircleIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid';
-import { Genero, Permission, Usuario } from '@/types';
+import type { Genero, Permission} from '@/types';
 import {removerCaracter} from '@/utils';
 import {userStore} from '@/stores/user';
 
@@ -71,16 +71,16 @@ function handleClickEmit(){
 }
 
 async function signup(){
-  const object: Usuario = {
+  const object: any = {
     primeiro_nome: primeiro_nome.value,
     segundo_nome: segundo_nome.value,
     data_nascimento: data_nascimento.value,
-    genero: selectGenero.value.id,
+    genero: selectGenero.value?.id,
     email: email.value,
     matricula: removerCaracter(matricula.value),
     tel: removerCaracter(tel.value),
     senha: senha.value,
-    permissoes: [selectPermission.value.id]
+    permissoes: [selectPermission.value?.id]
   };
   const response = await user.createUser(object);
   if(response === true){
