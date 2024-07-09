@@ -100,7 +100,7 @@ async function login() {
   </form>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
   form {
   width: 100%;
   display: flex;
@@ -113,7 +113,7 @@ async function login() {
 }
 
 a{
-  color: #fff;
+  color: $textColor;
   cursor: pointer;
   font-size: 0.7rem;
   font-weight: 300;
@@ -122,9 +122,11 @@ a{
 
 a:hover {
   text-decoration: solid;
-  color: #fff;
+  color: $textColor;
 }
-
+p{
+  margin: 0px;
+}
 .form-group {
   display: flex;
   gap: 6px;
@@ -135,21 +137,21 @@ a:hover {
 
 input, select {
   width: 100%;
-  color: #fff;
+  color: $textColor;
   padding: 12px 16px;
-  background-color: #18191C;
+  background-color: $dark;
   border-radius: 10px;
-  border: #333335 solid 1px;
+  border: $contour solid 1px;
 }
 
 .button-login {
   cursor: pointer;
   border: none;
   padding: 12px 16px;
-  color: #fff;
+  color: $textColor;
   font-size: 0.8rem;
   font-weight: 700;
-  background-color: #044FE0;
+  background-color: $secondary;
   border-radius: 10px;
   width: 100%;
 }
@@ -165,13 +167,13 @@ input, select {
   padding: 16px;
   font-size: 0.8rem;
   font-weight: 600;
-  background-color: #18191C;
-  color: #fff;
+  background-color: $dark;
+  color: $textColor;
 }
 
 .icon {
   height: 20px;
   width: 20px;
-  color: #fff;
+  color: $textColor;
 }
 </style>

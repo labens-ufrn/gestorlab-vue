@@ -278,7 +278,7 @@ async function signup(){
   </form>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 form {
   width: 100%;
   display: flex;
@@ -313,12 +313,12 @@ form {
 }
 input, select {
   width: 100%;
-  color: #fff;
+  color: $textColor;
   padding: 12px 16px;
   padding-left: 8px;
-  background-color: #18191C;
+  background-color: $dark;
   border-radius: 10px;
-  border: #333335 solid 1px;
+  border: $contour solid 1px;
 }
 
 .password {
@@ -329,10 +329,10 @@ input, select {
   cursor: pointer;
   border: none;
   padding: 12px 16px;
-  color: #fff;
+  color: $textColor;
   font-size: 0.8rem;
   font-weight: 700;
-  background-color: #044FE0;
+  background-color: $secondary;
   border-radius: 10px;
   width: 100%;
 }
@@ -340,10 +340,10 @@ input, select {
 .button-save-disabled{
   border: none;
   padding: 12px 16px;
-  color: #938f8f;
+  color: $textDisabled;
   font-size: 0.8rem;
   font-weight: 700;
-  background-color: #0e2d6c;
+  background-color: $disabledButton;
   border-radius: 10px;
   width: 100%;
 }
@@ -358,20 +358,20 @@ input, select {
   padding: 16px;
   font-size: 0.8rem;
   font-weight: 600;
-  background-color: #18191C;
-  color: #fff;
+  background-color: $dark;
+  color: $textColor;
 }
 
 .icon {
   width: 20px;
   height: 20px;
-  color: #fff;
+  color: $textColor;
 }
 
 .error {
   width: 100%;
   font-size: 0.6rem;
-  color: red;
+  color: $error;
   font-weight: 800;
   font-style: italic;
 }
