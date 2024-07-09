@@ -73,7 +73,7 @@ async function receiveEvent(data: boolean){
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container-signup{
     width: 100%;
     height: 100%;
@@ -103,13 +103,13 @@ async function receiveEvent(data: boolean){
     flex-direction: column;
     gap: 40px;
     padding: 40px;
-    color: #fff;
+    color: $textColor;
     background-color: transparent;
     flex: 1;
 }
 
 .form-signup p {
-    color: #fff;
+    color: $textColor;
     font-size: 1.2rem;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
