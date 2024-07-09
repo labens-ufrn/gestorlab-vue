@@ -124,7 +124,9 @@ a:hover {
   text-decoration: solid;
   color: #fff;
 }
-
+p{
+  margin: 0px;
+}
 .form-group {
   display: flex;
   gap: 6px;
