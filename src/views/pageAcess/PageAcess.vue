@@ -1,5 +1,9 @@
 <template>
-  <div class="container-signup">
+  <LoadingPage v-if="loading" />
+  <div
+    v-else
+    class="container-signup"
+  >
     <div class="signup">
       <div class="banner" />
       <div class="form-signup">
@@ -23,11 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
+import { ref, onMounted } from 'vue';
 import FormLogin from './components/FormLogin.vue';
 import FormSignup from './components/FormSignup.vue';
 import { authStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
+import LoadingPage from '@/components/LoadingPage.vue';
 
 // Gerencia de estado
 const auth = authStore();
@@ -37,20 +42,25 @@ const router = useRouter();
 
 // variables
 let option = ref(true);
+let loading = ref<boolean>(true);
 
 // definição de eventos
 defineEmits(['event']);
 
 //function
-onBeforeMount(async()=> {
+onMounted(async()=> {
   let token = window.document.cookie;
   if (token && token !== 'null') {
     const response:Boolean = await auth.authAutenticate(token);
     if(response){
-      handleRouter();
+      setTimeout(()=>{
+        handleRouter();
+      }, 1000);
     }else {
-      return;
+      loading.value = false;
     }
+  } else {
+    loading.value = false;
   }
 });
 
