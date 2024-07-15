@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import API from '@/services/index';
-import { ArrowRightCircleIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid';
 import type { Genero, Permission} from '@/types';
 import {removerCaracter} from '@/utils';
 import {userStore} from '@/stores/user';
+import { QIcon } from 'quasar';
 
 // gerencia de estado
 const user = userStore();
@@ -216,13 +216,15 @@ async function signup(){
               class="eye"
               @click="visible=!visible"
             >
-              <EyeSlashIcon
+              <QIcon
+                name="visibility_off"
                 v-if="visible"
-                class="icon-password"
+                size="1rem"
               />
-              <EyeIcon
+              <QIcon
                 v-else
-                class="icon-password"
+                name="visibility"
+                size="1rem"
               />
             </span>
           </div>
@@ -243,13 +245,15 @@ async function signup(){
               class="eye"
               @click="confirmVisible=!confirmVisible"
             >
-              <EyeSlashIcon
+              <QIcon
+                name="visibility_off"
                 v-if="confirmVisible"
-                class="icon-password"
+                size="1rem"
               />
-              <EyeIcon
+              <QIcon
                 v-else
-                class="icon-password"
+                name="visibility"
+                size="1rem"
               />
             </span>
           </div>
@@ -273,7 +277,10 @@ async function signup(){
       class="button-card"
     >
       <p>Já tem cadastro?</p>
-      <ArrowRightCircleIcon class="icon" />
+      <QIcon
+        name="east"
+        size="1rem"
+      />
     </button>
   </form>
 </template>
@@ -288,6 +295,10 @@ form {
   font-size: 0.8rem;
   font-family: 'Inter', sans-serif;
   font-weight: 300;
+}
+
+p{
+  margin: 0px;
 }
 
 .form-row {
