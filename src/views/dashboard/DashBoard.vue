@@ -16,7 +16,7 @@ function clearAcess(){
 </script>
 
 <template>
-  <header class="container top-bar">
+  <header class="top-bar">
     <img src="@/assets/imgs/GestorLAB (1).svg">
     <button
       @click.prevent="clearAcess()"
