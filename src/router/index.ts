@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import API from '@/services/index';
+import { authStore } from '@/stores/auth';
 import HomeViewVue from '@/views/home/HomeView.vue';
 import PageAcess from '@/views/pageAcess/PageAcess.vue';
 import DashBoard from '@/views/dashboard/DashBoard.vue';
 import UpdateImage from '@/views/dashboard/components/UpdateImage.vue';
 import Profile from '@/views/dashboard/components/MyProfile.vue';
-
 const routes = [
   {
     path: '/',
@@ -13,8 +12,8 @@ const routes = [
     component: HomeViewVue
   },
   {
-    path: '/signup',
-    name: 'signup',
+    path: '/pageAcess',
+    name: 'page-acess',
     component: PageAcess,
   },
   {
@@ -43,23 +42,13 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  const auth = authStore();
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    const token = window.document.cookie;
-
-    if (!token || token === 'null') {
-      next('/signup');
+    const response = await auth.authAutenticate();
+    if (response === false) {
+      next('/pageAcess');
     } else {
-      try {
-        await API.get('/usuarios/auth', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        next();
-      } catch (error) {
-        window.document.cookie = '';
-        next('/signup');
-      }
+      next();
     }
   } else {
     next();
