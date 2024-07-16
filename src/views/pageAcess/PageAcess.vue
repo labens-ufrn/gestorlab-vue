@@ -49,19 +49,15 @@ defineEmits(['event']);
 
 //function
 onMounted(async()=> {
-  let token = window.document.cookie;
-  if (token && token !== 'null') {
-    const response:Boolean = await auth.authAutenticate(token);
-    if(response){
-      setTimeout(()=>{
-        handleRouter();
-      }, 1000);
-    }else {
-      loading.value = false;
-    }
-  } else {
+  const response:Boolean = await auth.authAutenticate();
+  if(response){
+    setTimeout(()=>{
+      handleRouter();
+    }, 1000);
+  }else {
     loading.value = false;
   }
+  
 });
 
 function handleRouter() {
