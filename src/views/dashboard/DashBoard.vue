@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter, RouterView, RouterLink } from 'vue-router';
+import { authStore } from '@/stores/auth';
 import {ref} from 'vue';
 import {
   QDrawer, 
@@ -18,6 +19,7 @@ import {
   QToolbarTitle
 } from 'quasar';
 
+const auth = authStore();
 //Variaveis
 let drawer = ref(false);
 let menuList = [
@@ -34,11 +36,11 @@ const router = useRouter();
 
 //function
 function handleRouter() {
-  router.push('/signup');
+  router.push('/pageAcess');
 }
 
 function clearAcess(){
-  window.document.cookie = 'null';
+  auth.logout();
   handleRouter();
 }
 </script>
