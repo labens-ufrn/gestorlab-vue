@@ -3,6 +3,8 @@ import API from '@/services/index';
 import HomeViewVue from '@/views/home/HomeView.vue';
 import PageAcess from '@/views/pageAcess/PageAcess.vue';
 import DashBoard from '@/views/dashboard/DashBoard.vue';
+import UpdateImage from '@/views/dashboard/components/UpdateImage.vue';
+import Profile from '@/views/dashboard/components/MyProfile.vue';
 
 const routes = [
   {
@@ -19,7 +21,19 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: DashBoard,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'updateImage',
+        name: 'update-image',
+        component: UpdateImage,
+      },
+      {
+        path: 'profile',
+        name: 'profile',
+        component: Profile,
+      },
+    ]
   }
 ];
 
