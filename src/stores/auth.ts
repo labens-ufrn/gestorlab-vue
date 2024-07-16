@@ -3,7 +3,7 @@ import API from '@/services/index';
 
 export const authStore = defineStore('auth', {
   state: () => ({
-    token: '',
+    token: localStorage.getItem('token'), // Recupera o token do localStorage
   }),
   actions: {
     async authLogin(formData: FormData) {
@@ -14,23 +14,28 @@ export const authStore = defineStore('auth', {
           }
         });
         const token = response.data.access_token;
-        window.document.cookie = token;
+        this.token = token;
+        localStorage.setItem('token', token);
         return true;
       } catch (err) {
         return false;
       }
     },
-    async authAutenticate(token: string) {
+    async authAutenticate() {
       try {
         await API.get('/usuarios/auth', {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${this.token}`,
           },
         });
         return true;
       } catch (error) {
-        return true;
+        return false;
       }
+    },
+    logout() {
+      this.token = null;
+      localStorage.removeItem('token'); // Remove o token do localStorage ao fazer logout
     }
   }
 });
