@@ -1,7 +1,22 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRouter, RouterView, RouterLink } from 'vue-router';
 import {ref} from 'vue';
-import { QDrawer, QLayout, QIcon, QScrollArea, QList, QItem, QItemSection, QSeparator, QPageContainer, QPage, QHeader, QToolbar, QBtn, QToolbarTitle} from 'quasar';
+import {
+  QDrawer, 
+  QLayout, 
+  QIcon, 
+  QScrollArea, 
+  QList, 
+  QItem, 
+  QItemSection, 
+  QSeparator, 
+  QPageContainer, 
+  QPage, 
+  QHeader, 
+  QToolbar,
+  QBtn, 
+  QToolbarTitle
+} from 'quasar';
 
 //Variaveis
 let drawer = ref(false);
@@ -9,7 +24,8 @@ let menuList = [
   {
     label: 'Imagem',
     icon: 'photo_camera',
-    separator: true
+    separator: true,
+    link: 'update-image'
   }
 ];
 
@@ -38,13 +54,15 @@ function clearAcess(){
       class="top-bar"
     >
       <q-toolbar>
-        <q-btn
-          flat
+        <QBtn
           @click="drawer = !drawer"
-          round
-          dense
-          icon="menu"
-        />
+          class="button-layout"
+        >
+          <QIcon
+            name="menu"
+            size="1.2rem"
+          />
+        </QBtn>
         <q-toolbar-title>
           <img src="@/assets/imgs/GestorLAB (1).svg">
         </q-toolbar-title>
@@ -68,23 +86,50 @@ function clearAcess(){
       style="background-color: #1F2026; border: 1px #333335 solid;"
     >
       <QScrollArea class="fit">
+        <QItem
+          class="q-item"
+          clickable
+          v-ripple
+          @click="()=>{}"
+        >
+          <QItemSection avatar>
+            <QIcon
+              size="4rem"
+              name="account_circle"
+            />
+          </QItemSection>
+          <QItemSection>
+            <p class="nameUser">
+              {{ "José Flávio da Silva Maia" }}
+            </p>
+          </QItemSection>
+        </QItem>
+        <QSeparator
+          style="background-color: #333335;"
+        />
         <QList>
           <template
             v-for="(menuItem, index) in menuList"
             :key="index"
           >
-            <QItem
-              clickable
-              :active="menuItem.label === 'Outbox'"
-              v-ripple
+            <router-link
+              class="router-link"
+              :to="{name: menuItem.link}"
             >
-              <QItemSection avatar>
-                <QIcon :name="menuItem.icon" />
-              </QItemSection>
-              <QItemSection>
-                {{ menuItem.label }}
-              </QItemSection>
-            </QItem>
+              <QItem
+                clickable
+                :active="menuItem.label === 'Outbox'"
+                v-ripple
+              >
+                <QItemSection avatar>
+                  <QIcon :name="menuItem.icon" />
+                </QItemSection>
+                <QItemSection>
+                  {{ menuItem.label }}
+                </QItemSection>
+              </QItem>
+            </router-link>
+            
             <QSeparator
               style="background-color: #333335;"
               :key="'sep' + index"
@@ -97,12 +142,7 @@ function clearAcess(){
 
     <q-page-container>
       <q-page padding>
-        <p
-          v-for="n in 15"
-          :key="n"
-        >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-        </p>
+        <RouterView />
       </q-page>
     </q-page-container>
   </QLayout>
@@ -130,14 +170,15 @@ function clearAcess(){
     box-shadow: 0px 4px 4px 0px #1F2026;
   }
 
-  .box-menu{
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  .nameUser{
+    margin: 0px;
+    font-size: 1rem;
+    font-weight: 600;
   }
 
-  .icon {
-    width: 26px;
-    height: 26px;
+  .q-item {
+    display: flex; 
+    align-items: center; 
+    padding: 20px;
   }
 </style>
