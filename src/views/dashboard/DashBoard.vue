@@ -166,7 +166,6 @@ function clearAcess(){
     background-color: #1C1D21;
     border-radius: 10px;
     padding: 10px 16px;
-    border: 0.5px solid #333335;
     box-shadow: 0px 4px 4px 0px #1F2026;
   }
 
