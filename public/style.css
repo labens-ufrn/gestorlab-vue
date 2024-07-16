@@ -61,3 +61,8 @@ a {
   height: 16px;
   color: #fff;
 }
+
+.router-link {
+  text-decoration: none;
+  color: inherit;
+}
