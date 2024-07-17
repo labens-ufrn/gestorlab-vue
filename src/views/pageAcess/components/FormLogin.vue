@@ -185,4 +185,11 @@ input, select {
   width: 20px;
   color: $textColor;
 }
+.error {
+  width: 100%;
+  font-size: 0.6rem;
+  color: $error;
+  font-weight: 800;
+  font-style: italic;
+}
 </style>
