@@ -3,13 +3,37 @@ import API from '@/services/index';
 
 export const userStore = defineStore('user', {
   state: () => ({
-    user: null,
+    user: JSON.parse(localStorage.getItem('user') || 'null') as Object | null,
   }),
 
+  getters: {
+    getUser(state) {
+      return state.user;
+    }
+  },
+
   actions: {
+    async setUser(token: string) {
+      try {
+        const response = await API.get('/usuarios/logado', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const userData = response.data;
+        const data = {
+          ...userData
+        };
+        localStorage.setItem('user', JSON.stringify(data));
+        this.user = data;
+      }
+      catch (err) {
+        return err;
+      }
+    },
     async createUser(usuario: any) {
       try {
-        const response = await API.post('/usuarios/signup', {
+        await API.post('/usuarios/signup', {
           primeiro_nome: usuario.primeiro_nome,
           segundo_nome: usuario.segundo_nome,
           data_nascimento: usuario.data_nascimento,
@@ -20,11 +44,13 @@ export const userStore = defineStore('user', {
           senha: usuario.senha,
           list_permissoes: usuario.permissoes
         });
-        this.user = response.data;
         return true;
       } catch (error) {
         return error;
       }
+    },
+    clearUser() {
+      localStorage.removeItem('user');
     }
-  }
+  },
 }); 
