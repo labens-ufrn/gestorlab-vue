@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useRouter, RouterView, RouterLink } from 'vue-router';
 import { authStore } from '@/stores/auth';
-import {ref} from 'vue';
+import { userStore } from '@/stores/user';
+import {ref, onMounted} from 'vue';
 import {
   QDrawer, 
   QLayout, 
@@ -20,8 +21,10 @@ import {
 } from 'quasar';
 
 const auth = authStore();
+const user = userStore();
 //Variaveis
 let drawer = ref(false);
+let userLocal = ref<any>(null);
 let menuList = [
   {
     label: 'Imagem',
@@ -41,8 +44,13 @@ function handleRouter() {
 
 function clearAcess(){
   auth.logout();
+  user.clearUser();
   handleRouter();
 }
+onMounted(()=> {
+  userLocal.value = user.getUser;
+});
+
 </script>
 
 <template>
@@ -62,7 +70,7 @@ function clearAcess(){
         >
           <QIcon
             name="menu"
-            size="1.2rem"
+            size="1.6rem"
           />
         </QBtn>
         <q-toolbar-title>
@@ -75,7 +83,7 @@ function clearAcess(){
         >
           <QIcon
             name="logout"
-            size="1.2rem"
+            size="1.6rem"
           />
         </QBtn>
       </q-toolbar>
@@ -102,7 +110,7 @@ function clearAcess(){
           </QItemSection>
           <QItemSection>
             <p class="nameUser">
-              {{ "José Flávio da Silva Maia" }}
+              {{ userLocal?.primeiro_nome + ' ' + userLocal?.segundo_nome }}
             </p>
           </QItemSection>
         </QItem>
