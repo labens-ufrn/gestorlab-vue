@@ -3,8 +3,13 @@ import API from '@/services/index';
 
 export const authStore = defineStore('auth', {
   state: () => ({
-    token: localStorage.getItem('token'), // Recupera o token do localStorage
+    token: localStorage.getItem('token') as string | null // Recupera o token do localStorage
   }),
+  getters: {
+    getToken(state): string {
+      return state.token || '';
+    }
+  },
   actions: {
     async authLogin(formData: FormData) {
       try {
