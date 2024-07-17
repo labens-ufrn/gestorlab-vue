@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  
 </script>
 <template>
-  <div><span>oii</span></div>
+  <div>
+    <span>oii</span>
+  </div>
 </template>
 <style lang="scss">
   span {

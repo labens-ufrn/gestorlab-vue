@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import API from '@/services/index';
-import type { Genero, Permission} from '@/types';
+import type { Genero, Permission, Imagefile} from '@/types';
 import {removerCaracter} from '@/utils';
 import {userStore} from '@/stores/user';
 import { QIcon } from 'quasar';
@@ -25,6 +25,10 @@ let confirmPassword = ref<String>();
 let visible = ref<boolean>(true);
 let confirmVisible = ref<boolean>(true);
 let errorPassword = ref<boolean>(false);
+
+//Variaveis da imagem 
+const selectedImage = ref<Imagefile | null>(null);
+const imageBase64 = ref<string | null>(null);
 
 // Eventos
 const emit = defineEmits(['event']);
@@ -53,6 +57,21 @@ async function getGeneros(){
   }catch(e){
     return;
   }
+}
+
+function onImageChange(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+
+  if (!file) return;
+
+  selectedImage.value = file;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    imageBase64.value = event.target?.result as string;
+  };
+  reader.readAsDataURL(file);
 }
 
 async function getPermissions(){
@@ -95,6 +114,17 @@ async function signup(){
 
 <template>
   <form @submit.prevent="signup()">
+    <div class="form-group">
+      <label for="image">Imagem de perfil</label>
+      <input
+        type="file"
+        @change="onImageChange"
+        accept="image/*"
+        id="image"
+        name="image"
+        placeholder="escolha uma imagem"
+      >
+    </div>
     <div class="form-group">
       <label for="primeiro-nome">Primeiro nome</label>
       <input
