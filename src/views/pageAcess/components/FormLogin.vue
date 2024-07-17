@@ -2,10 +2,12 @@
 import {ref} from 'vue';
 import { QIcon } from 'quasar';
 import { authStore } from '@/stores/auth';
+import {userStore} from '@/stores/user';
 import { useRouter } from 'vue-router';
 
 // Gerencia de estado
 const auth = authStore();
+const user = userStore();
 
 //Router
 const router = useRouter();
@@ -36,6 +38,8 @@ async function login() {
   const response: boolean = await auth.authLogin(formData);
   
   if (response){
+    const token = auth.getToken;
+    user.setUser(token);
     handleRouter();
   } else {
     alert('Senha ou E-mail invalidos!');
