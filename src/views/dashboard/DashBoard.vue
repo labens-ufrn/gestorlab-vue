@@ -42,11 +42,14 @@ function handleRouter() {
   router.push('/pageAcess');
 }
 
+
 function clearAcess(){
   auth.logout();
   user.clearUser();
   handleRouter();
 }
+
+
 onMounted(()=> {
   userLocal.value = user.getUser;
 });
@@ -83,7 +86,7 @@ onMounted(()=> {
         >
           <QIcon
             name="logout"
-            size="1.6rem"
+            size="1.4rem"
           />
         </QBtn>
       </q-toolbar>
@@ -103,10 +106,12 @@ onMounted(()=> {
           @click="()=>{}"
         >
           <QItemSection avatar>
-            <QIcon
-              size="4rem"
-              name="account_circle"
-            />
+            <img
+              class="img-avatar"
+              v-if="userLocal && userLocal.image"
+              :src="`${userLocal?.image}`"
+              alt="Imagem do Usuário"
+            >
           </QItemSection>
           <QItemSection>
             <p class="nameUser">
@@ -189,5 +194,11 @@ onMounted(()=> {
     display: flex; 
     align-items: center; 
     padding: 20px;
+  }
+
+  .img-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
   }
 </style>

@@ -8,7 +8,10 @@ export const userStore = defineStore('user', {
 
   getters: {
     getUser(state) {
-      return state.user;
+      const data = {
+        ...state.user
+      };
+      return data;
     }
   },
 
@@ -39,6 +42,7 @@ export const userStore = defineStore('user', {
           data_nascimento: usuario.data_nascimento,
           genero: usuario.genero,
           email: usuario.email,
+          image: usuario.image,
           matricula: usuario.matricula,
           tel: usuario.tel,
           senha: usuario.senha,

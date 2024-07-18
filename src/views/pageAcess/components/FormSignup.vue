@@ -96,6 +96,7 @@ async function signup(){
     data_nascimento: data_nascimento.value,
     genero: selectGenero.value?.id,
     email: email.value,
+    image: imageBase64.value,
     matricula: removerCaracter(matricula.value),
     tel: removerCaracter(tel.value),
     senha: senha.value,
