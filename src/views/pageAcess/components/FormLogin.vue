@@ -39,7 +39,7 @@ async function login() {
   
   if (response){
     const token = auth.getToken;
-    user.setUser(token);
+    await user.setUser(token);
     handleRouter();
   } else {
     alert('Senha ou E-mail invalidos!');

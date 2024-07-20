@@ -38,21 +38,19 @@ let menuList = [
 const router = useRouter();
 
 //function
+onMounted(()=> {
+  userLocal.value = user.getUser;
+});
+
 function handleRouter() {
   router.push('/pageAcess');
 }
-
 
 function clearAcess(){
   auth.logout();
   user.clearUser();
   handleRouter();
 }
-
-
-onMounted(()=> {
-  userLocal.value = user.getUser;
-});
 
 </script>
 
