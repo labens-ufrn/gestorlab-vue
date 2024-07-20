@@ -9,10 +9,11 @@
 ## Tecnologias
 
 - VUE 3
-- CSS
+- SASS
 - HTML
-- VUEX
+- PINIA
 - VUE_ROUTER
+- QUASAR
 
 ## Tutorial de started
 
