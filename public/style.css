@@ -50,7 +50,7 @@ a {
 
 .eye {
   position: absolute;
-  top: 53%;
+  top: 45%;
   right: 8px;
   transform: translateY(-50%);
   cursor: pointer;
@@ -60,4 +60,9 @@ a {
   width: 16px;
   height: 16px;
   color: #fff;
+}
+
+.router-link {
+  text-decoration: none;
+  color: inherit;
 }

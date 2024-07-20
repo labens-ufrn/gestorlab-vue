@@ -4,7 +4,7 @@ const router = useRouter();
 
 // functions
 function handleRouter() {
-  router.push('/signup');
+  router.push('/pageAcess');
 }
 </script>
 

@@ -13,7 +13,6 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@heroicons/vue": "^2.1.4",
     "@quasar/extras": "^1.16.12",
     "@types/vue-the-mask": "^0.11.5",
     "axios": "^1.7.2",
@@ -22,7 +21,8 @@
     "vue": "^3.4.15",
     "vue-cookies": "^1.8.4",
     "vue-router": "^4.2.5",
-    "vue-the-mask": "^0.11.1"
+    "vue-the-mask": "^0.11.1",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.7.0",

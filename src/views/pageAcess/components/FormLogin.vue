@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import {ref} from 'vue';
-import { ArrowRightCircleIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid';
+import { QIcon } from 'quasar';
 import { authStore } from '@/stores/auth';
+import {userStore} from '@/stores/user';
 import { useRouter } from 'vue-router';
 
 // Gerencia de estado
 const auth = authStore();
+const user = userStore();
 
 //Router
 const router = useRouter();
@@ -36,6 +38,8 @@ async function login() {
   const response: boolean = await auth.authLogin(formData);
   
   if (response){
+    const token = auth.getToken;
+    user.setUser(token);
     handleRouter();
   } else {
     alert('Senha ou E-mail invalidos!');
@@ -72,13 +76,15 @@ async function login() {
           class="eye"
           @click="visible=!visible"
         >
-          <EyeSlashIcon
+          <QIcon
+            name="visibility_off"
             v-if="visible"
-            class="icon-password"
+            size="1rem"
           />
-          <EyeIcon
+          <QIcon
             v-else
-            class="icon-password"
+            name="visibility"
+            size="1rem"
           />
         </span>
       </div>
@@ -95,7 +101,10 @@ async function login() {
       class="button-card"
     >
       <p>Cadastre-se gratuitamente!</p>
-      <ArrowRightCircleIcon class="icon" />
+      <QIcon
+        name="east"
+        size="1rem"
+      />
     </button>
   </form>
 </template>
@@ -175,5 +184,12 @@ input, select {
   height: 20px;
   width: 20px;
   color: $textColor;
+}
+.error {
+  width: 100%;
+  font-size: 0.6rem;
+  color: $error;
+  font-weight: 800;
+  font-style: italic;
 }
 </style>

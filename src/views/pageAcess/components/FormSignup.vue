@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import API from '@/services/index';
-import { ArrowRightCircleIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid';
-import type { Genero, Permission} from '@/types';
+import type { Genero, Permission, Imagefile} from '@/types';
 import {removerCaracter} from '@/utils';
 import {userStore} from '@/stores/user';
+import { QIcon } from 'quasar';
 
 // gerencia de estado
 const user = userStore();
@@ -25,6 +25,10 @@ let confirmPassword = ref<String>();
 let visible = ref<boolean>(true);
 let confirmVisible = ref<boolean>(true);
 let errorPassword = ref<boolean>(false);
+
+//Variaveis da imagem 
+const selectedImage = ref<Imagefile | null>(null);
+const imageBase64 = ref<string | null>(null);
 
 // Eventos
 const emit = defineEmits(['event']);
@@ -55,6 +59,21 @@ async function getGeneros(){
   }
 }
 
+function onImageChange(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+
+  if (!file) return;
+
+  selectedImage.value = file;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    imageBase64.value = event.target?.result as string;
+  };
+  reader.readAsDataURL(file);
+}
+
 async function getPermissions(){
   try{
     const response: any = await API.get('/permissoes');
@@ -77,6 +96,7 @@ async function signup(){
     data_nascimento: data_nascimento.value,
     genero: selectGenero.value?.id,
     email: email.value,
+    image: imageBase64.value,
     matricula: removerCaracter(matricula.value),
     tel: removerCaracter(tel.value),
     senha: senha.value,
@@ -95,6 +115,17 @@ async function signup(){
 
 <template>
   <form @submit.prevent="signup()">
+    <div class="form-group">
+      <label for="image">Imagem de perfil</label>
+      <input
+        type="file"
+        @change="onImageChange"
+        accept="image/*"
+        id="image"
+        name="image"
+        placeholder="escolha uma imagem"
+      >
+    </div>
     <div class="form-group">
       <label for="primeiro-nome">Primeiro nome</label>
       <input
@@ -216,13 +247,15 @@ async function signup(){
               class="eye"
               @click="visible=!visible"
             >
-              <EyeSlashIcon
+              <QIcon
+                name="visibility_off"
                 v-if="visible"
-                class="icon-password"
+                size="1rem"
               />
-              <EyeIcon
+              <QIcon
                 v-else
-                class="icon-password"
+                name="visibility"
+                size="1rem"
               />
             </span>
           </div>
@@ -243,13 +276,15 @@ async function signup(){
               class="eye"
               @click="confirmVisible=!confirmVisible"
             >
-              <EyeSlashIcon
+              <QIcon
+                name="visibility_off"
                 v-if="confirmVisible"
-                class="icon-password"
+                size="1rem"
               />
-              <EyeIcon
+              <QIcon
                 v-else
-                class="icon-password"
+                name="visibility"
+                size="1rem"
               />
             </span>
           </div>
@@ -273,7 +308,10 @@ async function signup(){
       class="button-card"
     >
       <p>Já tem cadastro?</p>
-      <ArrowRightCircleIcon class="icon" />
+      <QIcon
+        name="east"
+        size="1rem"
+      />
     </button>
   </form>
 </template>
@@ -288,6 +326,10 @@ form {
   font-size: 0.8rem;
   font-family: 'Inter', sans-serif;
   font-weight: 300;
+}
+
+p{
+  margin: 0px;
 }
 
 .form-row {
