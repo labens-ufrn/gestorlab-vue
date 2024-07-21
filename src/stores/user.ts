@@ -24,8 +24,11 @@ export const userStore = defineStore('user', {
           },
         });
         const userData = response.data;
+
+        const usuario = await API.get(`/usuarios/${userData.id}`);
+
         const data = {
-          ...userData
+          ...usuario.data
         };
         localStorage.setItem('user', JSON.stringify(data));
         this.user = data;
