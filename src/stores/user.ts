@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import API from '@/services/index';
+import { pendingStore } from '@/stores/pending';
 
 export const userStore = defineStore('user', {
   state: () => ({
@@ -38,8 +39,9 @@ export const userStore = defineStore('user', {
       }
     },
     async createUser(usuario: any) {
+      const pending = pendingStore();
       try {
-        await API.post('/usuarios/signup', {
+        const response = await API.post('/usuarios/signup', {
           primeiro_nome: usuario.primeiro_nome,
           segundo_nome: usuario.segundo_nome,
           data_nascimento: usuario.data_nascimento,
@@ -51,6 +53,10 @@ export const userStore = defineStore('user', {
           senha: usuario.senha,
           list_permissoes: usuario.permissoes
         });
+        const data = {
+          ...response.data
+        };
+        await pending.setPending(data);
         return true;
       } catch (error) {
         return error;

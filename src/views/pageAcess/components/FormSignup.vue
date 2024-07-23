@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import API from '@/services/index';
-import type { Genero, Permission, Imagefile} from '@/types';
+import type { Genero, Imagefile} from '@/types';
 import {removerCaracter} from '@/utils';
 import {userStore} from '@/stores/user';
 import { QIcon } from 'quasar';
@@ -11,8 +11,6 @@ const user = userStore();
 // Variaveis
 const listGeneros = ref<Array<Genero>>();
 let selectGenero = ref<Genero>();
-const listPermissions = ref<Array<Permission>>();
-let selectPermission = ref<Permission>();
 let matricula = ref<String>();
 let tel = ref<String>();
 let primeiro_nome = ref<String>();
@@ -46,7 +44,6 @@ watch(confirmPassword, (newPassword) => {
 //Functions
 onMounted(()=> {
   getGeneros();
-  getPermissions();
 });
 
 async function getGeneros(){
@@ -74,16 +71,6 @@ function onImageChange(event: Event) {
   reader.readAsDataURL(file);
 }
 
-async function getPermissions(){
-  try{
-    const response: any = await API.get('/permissoes');
-    listPermissions.value = response.data;
-    selectPermission.value = response.data[0];
-  }catch(e){
-    return;
-  }
-}
-
 function handleClickEmit(){
   const data = true;
   emit('event', data);
@@ -99,12 +86,11 @@ async function signup(){
     image: imageBase64.value,
     matricula: removerCaracter(matricula.value),
     tel: removerCaracter(tel.value),
-    senha: senha.value,
-    permissoes: [selectPermission.value?.id]
+    senha: senha.value
   };
   const response = await user.createUser(object);
   if(response === true){
-    alert('Usuário criado com sucesso!');
+    alert('Usuário criado com sucesso, agora espere o seu acesso ser liberado!');
     handleClickEmit();
   } else {
     alert(response);
@@ -171,6 +157,18 @@ async function signup(){
         required
       >
     </div>
+    <div class="form-group">
+      <label for="telefone">Telefone</label>
+      <input
+        v-model="tel"
+        v-mask="['(##) ####-####', '(##) #####-####']"
+        required
+        type="tel"
+        id="telefone"
+        name="telefone"
+        placeholder="(00) 09939-0000"
+      >
+    </div>
     <div class="form-row">
       <div class="form-group">
         <label for="">Data de nascimento</label>
@@ -198,37 +196,6 @@ async function signup(){
         </select>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="telefone">Telefone</label>
-        <input
-          v-model="tel"
-          v-mask="['(##) ####-####', '(##) #####-####']"
-          required
-          type="tel"
-          id="telefone"
-          name="telefone"
-          placeholder="(00) 09939-0000"
-        >
-      </div>
-      <div class="form-group">
-        <label for="cargo">Cargo</label>
-        <select
-          id="cargo"
-          name="cargo"
-          v-model="selectPermission"
-        >
-          <option
-            v-for="(item, index) in listPermissions"
-            :key="index"
-            :value="item"
-          >
-            {{ item.title }}
-          </option>
-        </select>
-      </div>
-    </div>
-
     <div class="form-colunm">
       <div class="form-row">
         <div class="form-group">

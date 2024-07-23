@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { QSpinner } from 'quasar';
+import { QSpinnerDots } from 'quasar';
 </script>
 
 <template>
   <div class="loading-page">
-    <QSpinner
+    <QSpinnerDots
       size="30px"
       color="primary"
     />
@@ -14,7 +14,7 @@ import { QSpinner } from 'quasar';
 <style scoped>
   .loading-page {
     width: 100%;
-    height: 100%;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;

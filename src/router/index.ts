@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { authStore } from '@/stores/auth';
-import HomeViewVue from '@/views/home/HomeView.vue';
-import PageAcess from '@/views/pageAcess/PageAcess.vue';
-import DashBoard from '@/views/dashboard/DashBoard.vue';
-import UpdateImage from '@/views/dashboard/components/UpdateImage.vue';
-import Profile from '@/views/dashboard/components/MyProfile.vue';
+import { useLoadingStore } from '@/stores/loading';
+
+const HomeViewVue = () => import('@/views/home/HomeView.vue');
+const PageAcess = () => import('@/views/pageAcess/PageAcess.vue');
+const DashBoard = () => import('@/views/dashboard/DashBoard.vue');
+const PedidosAcess = () => import('@/views/dashboard/components/PedidosAcess.vue');
+const Profile = () => import('@/views/dashboard/components/MyProfile.vue');
+
 const routes = [
   {
     path: '/',
@@ -20,12 +23,13 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: DashBoard,
+    redirect: '/dashboard/pedidosAcess',
     meta: { requiresAuth: true },
     children: [
       {
-        path: 'updateImage',
-        name: 'update-image',
-        component: UpdateImage,
+        path: 'pedidosAcess',
+        name: 'pedidos-acess',
+        component: PedidosAcess,
       },
       {
         path: 'profile',
@@ -43,16 +47,19 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const auth = authStore();
+  const loadingStore = useLoadingStore();
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
+    loadingStore.setLoading(true);
     const response = await auth.authAutenticate();
+    loadingStore.setLoading(false);
+
     if (response === false) {
       next('/pageAcess');
-    } else {
-      next();
+      return;
     }
-  } else {
-    next();
   }
+  next();
 });
 
 export default router;

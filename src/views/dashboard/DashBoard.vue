@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { useRouter, RouterView, RouterLink } from 'vue-router';
+import LoadingSpinner from '@/components/LoadingPage.vue';
+import { useLoadingStore } from '@/stores/loading';
+import {chooseListMenu} from '@/utils';
 import { authStore } from '@/stores/auth';
 import { userStore } from '@/stores/user';
-import {ref, onMounted} from 'vue';
+import { permStore} from '@/stores/perm';
+import {ref, onMounted, watchEffect} from 'vue';
 import {
   QDrawer, 
   QLayout, 
@@ -22,24 +26,28 @@ import {
 
 const auth = authStore();
 const user = userStore();
+const perm = permStore();
+const loadingStore = useLoadingStore();
 //Variaveis
+const isLoading = ref(false);
 let drawer = ref(false);
 let userLocal = ref<any>(null);
-let menuList = [
-  {
-    label: 'Imagem',
-    icon: 'photo_camera',
-    separator: true,
-    link: 'update-image'
-  }
-];
+let listLaboratory = ref<any>(null);
+let selectedLaboratory = ref<any>(null);
+let permUserLab = ref<any>(null);
+let listMenu = ref<any>(null);
+let openForPermition = ref<Number>();
 
 //Navegação
 const router = useRouter();
 
 //function
 onMounted(()=> {
-  userLocal.value = user.getUser;
+  getInitComponent();
+});
+
+watchEffect(() => {
+  isLoading.value = loadingStore.isLoading;
 });
 
 function handleRouter() {
@@ -50,6 +58,100 @@ function clearAcess(){
   auth.logout();
   user.clearUser();
   handleRouter();
+}
+
+
+
+async function handlePermLab(value: any, id_user: string){
+  let permList = await perm.getPermissionsLab();
+  let permLab = value.filter((item: any)=> item.id_user === id_user);
+  let selectedPerm = permList.filter((item: any) => item.id === permLab.perm_id);
+
+  return selectedPerm.title;
+}
+
+function getInitComponent() {
+  userLocal.value = user.getUser;
+  let userAux = userLocal.value;
+  if (userAux.permissoes[0].title === 'Admin'){
+    openForPermition.value = 2;
+    listMenu.value = chooseListMenu(openForPermition.value);
+  } else {
+    if(userAux.laboratorios.length !== 0){
+      if(userAux.laboratorios.length === 1){
+        listLaboratory.value = userAux.laboratorios[0];
+        if(listLaboratory.value.coordenador_id === userAux.id){
+          openForPermition.value = 1;
+          listMenu.value = chooseListMenu(openForPermition.value);
+        }else {
+          permUserLab.value = handlePermLab(listLaboratory.value.lista_perm, userAux.id);
+          switch (permUserLab.value) {
+          case ('Supervisor'):
+            openForPermition.value = 2;
+            listMenu.value = chooseListMenu(openForPermition.value);
+            break;
+          case ('Membro'):
+            openForPermition.value = 0;
+            listMenu.value = chooseListMenu(openForPermition.value);
+            break;
+          case ('Coolaborador'):
+            openForPermition.value = 3;
+            listMenu.value = chooseListMenu(openForPermition.value);
+            break;
+          default:
+            openForPermition.value = 0;
+            listMenu.value = chooseListMenu(openForPermition.value);
+          }
+        }
+      }else {
+        listLaboratory.value = userAux.laboratorios;
+        selectedLaboratory.value = listLaboratory.value[0];
+
+        if(selectedLaboratory.value.coordenador_id === userAux.id){
+          openForPermition.value = 1;
+          listMenu.value = chooseListMenu(openForPermition.value);
+        } else {
+          permUserLab.value = handlePermLab(selectedLaboratory.value.lista_perm, userAux.id);
+          switch (permUserLab.value) {
+          case ('Supervisor'):
+            openForPermition.value = 2;
+            listMenu.value = chooseListMenu(openForPermition.value);
+            break;
+          case ('Membro'):
+            openForPermition.value = 0;
+            listMenu.value = chooseListMenu(openForPermition.value);
+            break;
+          case ('Coolaborador'):
+            openForPermition.value = 3;
+            listMenu.value = chooseListMenu(openForPermition.value);
+            break;
+          default:
+            openForPermition.value = 0;
+            listMenu.value = chooseListMenu(openForPermition.value);
+          }
+        }
+      }
+    }else{
+      switch (userAux.permissoes[0].title) {
+      case ('Coordenador'):
+        openForPermition.value = 1;
+        listMenu.value = chooseListMenu(openForPermition.value);
+        break;
+      case ('Membro'):
+        openForPermition.value = 0;
+        listMenu.value = chooseListMenu(openForPermition.value);
+        break;
+      case ('Colaborador'):
+        openForPermition.value = 3;
+        listMenu.value = chooseListMenu(openForPermition.value);
+        break;
+      default:
+        openForPermition.value = 0;
+        listMenu.value = chooseListMenu(openForPermition.value);
+      }
+    }
+  }
+  
 }
 
 </script>
@@ -100,7 +202,6 @@ function clearAcess(){
         <QItem
           class="q-item"
           clickable
-          v-ripple
           @click="()=>{}"
         >
           <QItemSection avatar>
@@ -122,7 +223,7 @@ function clearAcess(){
         />
         <QList>
           <template
-            v-for="(menuItem, index) in menuList"
+            v-for="(menuItem, index) in listMenu"
             :key="index"
           >
             <router-link
@@ -132,7 +233,6 @@ function clearAcess(){
               <QItem
                 clickable
                 :active="menuItem.label === 'Outbox'"
-                v-ripple
               >
                 <QItemSection avatar>
                   <QIcon :name="menuItem.icon" />
@@ -154,8 +254,12 @@ function clearAcess(){
     </QDrawer>
 
     <q-page-container>
-      <q-page padding>
-        <RouterView />
+      <q-page
+        style="padding: 40px;"
+        padding
+      >
+        <router-view v-if="!isLoading" />
+        <loading-spinner v-else />
       </q-page>
     </q-page-container>
   </QLayout>
