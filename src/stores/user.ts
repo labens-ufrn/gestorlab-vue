@@ -5,6 +5,8 @@ import { pendingStore } from '@/stores/pending';
 export const userStore = defineStore('user', {
   state: () => ({
     user: JSON.parse(localStorage.getItem('user') || 'null') as Object | null,
+    laboratorys: JSON.parse(localStorage.getItem('laboratorys') || 'null') as any | null,
+    laboratory: JSON.parse(localStorage.getItem('laboratorys') || 'null') as any | null,
   }),
 
   getters: {
@@ -12,6 +14,14 @@ export const userStore = defineStore('user', {
       const data = {
         ...state.user
       };
+      return data;
+    },
+    getlaboratorys(state) {
+      const data = state.laboratorys;
+      return data;
+    },
+    getlaboratory(state) {
+      const data = { ...state.laboratory };
       return data;
     }
   },
@@ -33,6 +43,18 @@ export const userStore = defineStore('user', {
         };
         localStorage.setItem('user', JSON.stringify(data));
         this.user = data;
+        if (data.laboratorios.length === 0) {
+          localStorage.setItem('laboratorys', JSON.stringify(null));
+          this.laboratorys = null;
+        } else {
+          const listAux = [
+            ...data.laboratorios
+          ];
+          localStorage.setItem('laboratorys', JSON.stringify(listAux));
+          this.laboratorys = listAux;
+          localStorage.setItem('laboratory', JSON.stringify(listAux[0]));
+          this.laboratory = listAux[0];
+        }
       }
       catch (err) {
         return err;
