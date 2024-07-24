@@ -21,7 +21,8 @@ import {
   QHeader, 
   QToolbar,
   QBtn, 
-  QToolbarTitle
+  QToolbarTitle,
+  QMenu
 } from 'quasar';
 
 const auth = authStore();
@@ -30,6 +31,7 @@ const perm = permStore();
 const loadingStore = useLoadingStore();
 //Variaveis
 const isLoading = ref(false);
+const isLoadingDash = ref(false);
 let drawer = ref(false);
 let userLocal = ref<any>(null);
 let listLaboratory = ref<any>(null);
@@ -60,8 +62,6 @@ function clearAcess(){
   handleRouter();
 }
 
-
-
 async function handlePermLab(value: any, id_user: string){
   let permList = await perm.getPermissionsLab();
   let permLab = value.filter((item: any)=> item.id_user === id_user);
@@ -71,64 +71,41 @@ async function handlePermLab(value: any, id_user: string){
 }
 
 function getInitComponent() {
+  isLoadingDash.value = false;
   userLocal.value = user.getUser;
+  listLaboratory.value = user.getlaboratorys;
+  selectedLaboratory.value = user.getlaboratory;
+
   let userAux = userLocal.value;
+  let listLaboratoryAux = listLaboratory.value;
+  let selectedLaboratoryAux = selectedLaboratory.value;
+
   if (userAux.permissoes[0].title === 'Admin'){
     openForPermition.value = 2;
     listMenu.value = chooseListMenu(openForPermition.value);
   } else {
-    if(userAux.laboratorios.length !== 0){
-      if(userAux.laboratorios.length === 1){
-        listLaboratory.value = userAux.laboratorios[0];
-        if(listLaboratory.value.coordenador_id === userAux.id){
-          openForPermition.value = 1;
-          listMenu.value = chooseListMenu(openForPermition.value);
-        }else {
-          permUserLab.value = handlePermLab(listLaboratory.value.lista_perm, userAux.id);
-          switch (permUserLab.value) {
-          case ('Supervisor'):
-            openForPermition.value = 2;
-            listMenu.value = chooseListMenu(openForPermition.value);
-            break;
-          case ('Membro'):
-            openForPermition.value = 0;
-            listMenu.value = chooseListMenu(openForPermition.value);
-            break;
-          case ('Coolaborador'):
-            openForPermition.value = 3;
-            listMenu.value = chooseListMenu(openForPermition.value);
-            break;
-          default:
-            openForPermition.value = 0;
-            listMenu.value = chooseListMenu(openForPermition.value);
-          }
-        }
+    if( listLaboratoryAux !== null){
+      if(selectedLaboratoryAux.coordenador_id === userAux.id){
+        openForPermition.value = 1;
+        listMenu.value = chooseListMenu(openForPermition.value);
       }else {
-        listLaboratory.value = userAux.laboratorios;
-        selectedLaboratory.value = listLaboratory.value[0];
-
-        if(selectedLaboratory.value.coordenador_id === userAux.id){
-          openForPermition.value = 1;
+        permUserLab.value = handlePermLab(selectedLaboratoryAux.lista_perm, userAux.id);
+        switch (permUserLab.value) {
+        case ('Supervisor'):
+          openForPermition.value = 2;
           listMenu.value = chooseListMenu(openForPermition.value);
-        } else {
-          permUserLab.value = handlePermLab(selectedLaboratory.value.lista_perm, userAux.id);
-          switch (permUserLab.value) {
-          case ('Supervisor'):
-            openForPermition.value = 2;
-            listMenu.value = chooseListMenu(openForPermition.value);
-            break;
-          case ('Membro'):
-            openForPermition.value = 0;
-            listMenu.value = chooseListMenu(openForPermition.value);
-            break;
-          case ('Coolaborador'):
-            openForPermition.value = 3;
-            listMenu.value = chooseListMenu(openForPermition.value);
-            break;
-          default:
-            openForPermition.value = 0;
-            listMenu.value = chooseListMenu(openForPermition.value);
-          }
+          break;
+        case ('Membro'):
+          openForPermition.value = 0;
+          listMenu.value = chooseListMenu(openForPermition.value);
+          break;
+        case ('Coolaborador'):
+          openForPermition.value = 3;
+          listMenu.value = chooseListMenu(openForPermition.value);
+          break;
+        default:
+          openForPermition.value = 0;
+          listMenu.value = chooseListMenu(openForPermition.value);
         }
       }
     }else{
@@ -177,7 +154,18 @@ function getInitComponent() {
           />
         </QBtn>
         <q-toolbar-title>
-          <img src="@/assets/imgs/GestorLAB (1).svg">
+          <button
+            class="button-bar"
+          > 
+            <span>Gestor<strong>Lab</strong></span>
+            <q-menu fit>
+              <q-list style="min-width: 300px; background-color: #1F2026">
+                <q-item clickable>
+                  <q-item-section>New tab</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </button>
         </q-toolbar-title>
         
         <QBtn
@@ -265,7 +253,7 @@ function getInitComponent() {
   </QLayout>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
   .top-bar{
     width: 100%;
     position: fixed;
@@ -278,12 +266,21 @@ function getInitComponent() {
   }
 
   .button-layout{
+    text-transform: none;
     color: #fff;
     cursor: pointer;
     background-color: #1C1D21;
     border-radius: 10px;
     padding: 10px 16px;
     box-shadow: 0px 4px 4px 0px #1F2026;
+  }
+
+  .button-bar {
+    color: #fff;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 8px;
   }
 
   .nameUser{
@@ -302,5 +299,10 @@ function getInitComponent() {
     width: 70px;
     height: 70px;
     border-radius: 50%;
+  }
+
+  strong {
+    font-weight: 700;
+    color: $secondary;
   }
 </style>
