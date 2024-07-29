@@ -44,8 +44,11 @@ let openForPermition = ref<Number>();
 const router = useRouter();
 
 //function
-onMounted(()=> {
+onMounted(async()=> {
+  isLoadingDash.value = true;
+  await user.setUser(auth.getToken);
   getInitComponent();
+  isLoadingDash.value = false;
 });
 
 watchEffect(() => {
@@ -62,9 +65,9 @@ function clearAcess(){
   handleRouter();
 }
 
-function changeLab(labID: any) {
+function changeLab(labID: any, index: number) {
   const labChoice = listLaboratory.value.find((item: any)=> item.id === labID);
-  user.changeLabInState(toRaw(labChoice));
+  user.changeLabInState(toRaw(labChoice), index);
   getInitComponent();
 }
 
@@ -80,11 +83,10 @@ async function handlePermLab(value: any, id_user: string){
 }
 
 async function getInitComponent() {
-  isLoadingDash.value = false;
   userLocal.value = user.getUser;
   listLaboratory.value = user.getlaboratorys;
   selectedLaboratory.value = user.getlaboratory;
-
+  
   if (userLocal.value.permissoes[0].title === 'Admin'){
     openForPermition.value = 2;
     listMenu.value = chooseListMenu(openForPermition.value);
@@ -139,7 +141,9 @@ async function getInitComponent() {
 </script>
 
 <template>
+  <LoadingSpinner v-show="isLoadingDash" />
   <QLayout
+    v-show="!isLoadingDash"
     view="hHh Lpr lff"
     container
     class="shadow-2 rounded-borders"
@@ -171,7 +175,6 @@ async function getInitComponent() {
             </div>
             <q-menu
               v-if="listLaboratory !== null"
-              fit
             >
               <q-list style="min-width: 300px; background-color: #1F2026; border: 1px solid #333335">
                 <div class="menu-header">
@@ -179,24 +182,32 @@ async function getInitComponent() {
                 </div>
                 <q-item
                   class="q-item"
-                  v-for="lab in listLaboratory"
+                  v-for="(lab, index) in listLaboratory"
                   :key="lab.id"
                   clickable
-                  @click="changeLab(lab.id)"
+                  @click="changeLab(lab.id, index)"
                 >
-                  <QItemSection avatar>
-                    <img
-                      class="img-menu"
-                      v-if="lab.image"
-                      :src="`${lab?.image}`"
-                      alt="Imagem do Laboratório"
-                    >
-                  </QItemSection>
-                  <QItemSection>
-                    <p class="nameUser">
-                      {{ lab.nome }}
-                    </p>
-                  </QItemSection>
+                  <div class="menu-lab-profile">
+                    <QItemSection avatar>
+                      <img
+                        class="img-menu"
+                        v-if="lab.image"
+                        :src="`${lab?.image}`"
+                        alt="Imagem do Laboratório"
+                      >
+                    </QItemSection>
+                    <QItemSection>
+                      <p class="nameUser">
+                        {{ lab.nome }}
+                      </p>
+                    </QItemSection>
+                  </div>
+                  <QIcon
+                    v-show="lab.check !== false"
+                    name="check"
+                    size="1.6rem"
+                    color="primary"
+                  />
                 </q-item>
               </q-list>
             </q-menu>
@@ -340,7 +351,13 @@ async function getInitComponent() {
     font-size: 0.7rem;
   }
 
+  .menu-lab-profile {
+    display: flex;
+    align-items: center;
+  }
+
   .q-item {
+    justify-content: space-between;
     display: flex; 
     align-items: center; 
     padding: 20px;
