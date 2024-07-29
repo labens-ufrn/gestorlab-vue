@@ -1,32 +1,32 @@
 import { defineStore } from 'pinia';
 import API from '@/services/index';
 import { pendingStore } from '@/stores/pending';
+import { toRaw } from 'vue';
 
 export const userStore = defineStore('user', {
   state: () => ({
     user: JSON.parse(localStorage.getItem('user') || 'null') as Object | null,
     laboratorys: JSON.parse(localStorage.getItem('laboratorys') || 'null') as any | null,
-    laboratory: JSON.parse(localStorage.getItem('laboratorys') || 'null') as any | null,
+    laboratory: JSON.parse(localStorage.getItem('laboratory') || 'null') as any | null,
   }),
 
   getters: {
     getUser(state) {
-      const data = {
-        ...state.user
-      };
-      return data;
+      return toRaw(state.user);
     },
     getlaboratorys(state) {
-      const data = state.laboratorys;
-      return data;
+      return toRaw(state.laboratorys);
     },
     getlaboratory(state) {
-      const data = { ...state.laboratory };
-      return data;
+      return toRaw(state.laboratory);
     }
   },
 
   actions: {
+    changeLabInState(lab: any) {
+      localStorage.setItem('laboratory', JSON.stringify(lab));
+      this.laboratory = lab;
+    },
     async setUser(token: string) {
       try {
         const response = await API.get('/usuarios/logado', {
