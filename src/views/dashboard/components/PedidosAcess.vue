@@ -35,7 +35,6 @@ async function realeseAcess(item:any, index: any){
     perm: item.perm.id
   };
   const token = auth.getToken;
-  console.log(token);
   const response = await pending.releaseAcessUser(object, token);
   if(response){
     listPending.value?.splice(index, 1);
