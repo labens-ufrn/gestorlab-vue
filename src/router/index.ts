@@ -7,6 +7,7 @@ const PageAcess = () => import('@/views/pageAcess/PageAcess.vue');
 const DashBoard = () => import('@/views/dashboard/DashBoard.vue');
 const PedidosAcess = () => import('@/views/dashboard/components/PedidosAcess.vue');
 const Profile = () => import('@/views/dashboard/components/MyProfile.vue');
+const Timeline = () => import('@/views/dashboard/components/timeline/TimeLine.vue');
 
 const routes = [
   {
@@ -23,9 +24,14 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: DashBoard,
-    redirect: '/dashboard/pedidosAcess',
+    redirect: '/dashboard/timeline',
     meta: { requiresAuth: true },
     children: [
+      {
+        path: 'timeline',
+        name: 'time-line',
+        component: Timeline,
+      },
       {
         path: 'pedidosAcess',
         name: 'pedidos-acess',
