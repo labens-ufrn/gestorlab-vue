@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QCard, QSeparator, QCardSection, useQuasar} from 'quasar';
+import { QCard, QSeparator, QCardSection, useQuasar, QSpinnerDots} from 'quasar';
 import {pendingStore} from '@/stores/pending';
 import {permStore} from '@/stores/perm';
 import {authStore} from '@/stores/auth';
@@ -11,6 +11,7 @@ const auth = authStore();
 
 let listPending = ref<Array<any>>();
 let listPermissao = ref<Array<any>>();
+let loading = ref<Boolean>(false);
 
 // Quasar notificantion
 const q = useQuasar();
@@ -29,6 +30,7 @@ const initListPending = async() => {
 };
 
 async function realeseAcess(item:any, index: any){
+  loading.value = true;
   const object = {
     id: item.id,
     id_user: item.id_user,
@@ -37,12 +39,14 @@ async function realeseAcess(item:any, index: any){
   const token = auth.getToken;
   const response = await pending.releaseAcessUser(object, token);
   if(response){
+    loading.value = false;
     listPending.value?.splice(index, 1);
     q.notify({
       message: 'Acesso liberado!',
       color: 'green'
     });
   }else {
+    loading.value = false;
     q.notify({
       message: 'Não foi possível liberar o acesso, tente outra vez em alguns minutos!',
       color: 'red'
@@ -73,25 +77,35 @@ async function realeseAcess(item:any, index: any){
         />
 
         <q-card-section class="card-section">
-          <div class="content-card">
-            {{ item.data_create }}
-            <select
-              id="genero"
-              name="genero"
-              v-model="item.perm"
-            >
-              <option
-                v-for="permission in listPermissao"
-                :key="permission.id"
-                :value="permission"
+          <form @submit.prevent="realeseAcess(item, index)">
+            <div class="content-card">
+              {{ item.data_create }}
+              <select
+                id="genero"
+                name="genero"
+                required
+                v-model="item.perm"
               >
-                {{ permission.title }}
-              </option>
-            </select>
-          </div>
-          <button @click="realeseAcess(item, index)">
-            Liberar acesso
-          </button>
+                <option
+                  v-for="permission in listPermissao"
+                  :key="permission.id"
+                  :value="permission"
+                >
+                  {{ permission.title }}
+                </option>
+              </select>
+            </div>
+            <button type="submit">
+              <QSpinnerDots
+                size="20px"
+                color="dark"
+                v-if="loading"
+              />
+              <template v-else>
+                Liberar acesso
+              </template>
+            </button>
+          </form>
         </q-card-section>
       </q-card>
     </div>
@@ -109,6 +123,14 @@ async function realeseAcess(item:any, index: any){
     font-weight: 600;
     color: $textColor;
   }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
   .my-card {
     border: 1px solid $contour;
     box-shadow: 0px 4px 4px 0px $dark;
