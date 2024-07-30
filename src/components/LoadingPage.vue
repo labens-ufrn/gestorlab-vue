@@ -3,7 +3,7 @@ import { QSpinnerDots } from 'quasar';
 </script>
 
 <template>
-  <div class="loading-page">
+  <div>
     <QSpinnerDots
       size="30px"
       color="primary"
@@ -12,9 +12,9 @@ import { QSpinnerDots } from 'quasar';
 </template>
 
 <style scoped>
-  .loading-page {
+  div {
     width: 100%;
-    height: 80vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
