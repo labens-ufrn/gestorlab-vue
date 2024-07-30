@@ -4,12 +4,13 @@ import API from '@/services/index';
 import type { Genero, Imagefile} from '@/types';
 import {removerCaracter} from '@/utils';
 import {userStore} from '@/stores/user';
-import { QIcon } from 'quasar';
+import { QIcon, QSpinnerDots } from 'quasar';
 
 // gerencia de estado
 const user = userStore();
+
 // Variaveis
-const listGeneros = ref<Array<Genero>>();
+let listGeneros = ref<Array<Genero>>();
 let selectGenero = ref<Genero>();
 let matricula = ref<String>();
 let tel = ref<String>();
@@ -23,13 +24,14 @@ let confirmPassword = ref<String>();
 let visible = ref<boolean>(true);
 let confirmVisible = ref<boolean>(true);
 let errorPassword = ref<boolean>(false);
+let loading = ref<boolean>(false);
 
 //Variaveis da imagem 
-const selectedImage = ref<Imagefile | null>(null);
-const imageBase64 = ref<string | null>(null);
+let selectedImage = ref<Imagefile | null>(null);
+let imageBase64 = ref<string | null>(null);
 
 // Eventos
-const emit = defineEmits(['event']);
+let emit = defineEmits(['event']);
 
 watch(confirmPassword, (newPassword) => {
   if(senha.value !== '' && senha.value !== undefined && senha.value !== null){
@@ -77,6 +79,7 @@ function handleClickEmit(){
 }
 
 async function signup(){
+  loading.value = true;
   const object: any = {
     primeiro_nome: primeiro_nome.value,
     segundo_nome: segundo_nome.value,
@@ -90,9 +93,11 @@ async function signup(){
   };
   const response = await user.createUser(object);
   if(response === true){
+    loading.value= false;
     alert('Usuário criado com sucesso, agora espere o seu acesso ser liberado!');
     handleClickEmit();
   } else {
+    loading.value= false;
     alert(response);
   }
   
@@ -267,8 +272,15 @@ async function signup(){
       name="button-save"
       type="submit"
       :disabled="errorPassword ? true : false"
-    >
-      Cadastrar
+    > 
+      <QSpinnerDots
+        size="20px"
+        color="dark"
+        v-if="loading"
+      />
+      <template v-else>
+        Cadastrar
+      </template>
     </button>
     <button
       @click.prevent="handleClickEmit()"
