@@ -317,10 +317,13 @@ async function getInitComponent() {
     cursor: pointer;
     background-color: transparent;
     border-radius: 10px;
-    padding: 18px 20px;
+    padding: 12.5px 20px;
   }
 
   .menu-button-content{
+    font-family: 'Inter' sans-serif;
+    font-weight: 500;
+    font-size: 1.6rem;
     display: flex;
     align-items: center;
     gap: 16px;
