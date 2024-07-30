@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from 'vue';
-import { QIcon } from 'quasar';
+import { QIcon, QSpinnerDots } from 'quasar';
 import { authStore } from '@/stores/auth';
 import {userStore} from '@/stores/user';
 import { useRouter } from 'vue-router';
@@ -16,6 +16,7 @@ const router = useRouter();
 let username = ref<string>();
 let password = ref<string>();
 let visible = ref<boolean>(true);
+let loading = ref<boolean>(false);
 
 //Eventos
 const emit = defineEmits(['event']);
@@ -31,6 +32,7 @@ function handleRouter() {
 }
 
 async function login() {
+  loading.value = true;
   const formData = new FormData();
   formData.append('username', username.value || '');
   formData.append('password', password.value || '');
@@ -40,8 +42,10 @@ async function login() {
   if (response){
     const token = auth.getToken;
     await user.setUser(token);
+    loading.value = false;
     handleRouter();
   } else {
+    loading.value = false;
     alert('Senha ou E-mail invalidos!');
   }
 }
@@ -93,8 +97,15 @@ async function login() {
     <button
       type="submit"
       class="button-login"
-    >
-      <p>Entrar</p>
+    > 
+      <QSpinnerDots
+        size="20px"
+        color="dark"
+        v-if="loading"
+      />
+      <p v-else>
+        Entrar
+      </p>
     </button>
     <button
       @click.prevent="handleClickEmit()"
