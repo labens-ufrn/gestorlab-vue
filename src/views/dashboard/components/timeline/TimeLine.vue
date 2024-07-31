@@ -1,5 +1,25 @@
 <script setup lang="ts">
 import MyCard from '@/components/MyCard.vue';
+import {labStore} from '@/stores/laboratory';
+import {userStore} from '@/stores/user';
+
+import {onMounted, ref} from 'vue';
+
+// State
+const lab = labStore();
+const user = userStore();
+// Variables
+let listLaboratorys = ref<any>([]);
+
+// Functions 
+onMounted(async ()=>{
+  initComponent();
+});
+
+async function initComponent(){
+  const userAux: any = user.getUser;
+  listLaboratorys.value = await lab.getLaboratorys(userAux?.id);
+}
 </script>
 
 <template>
@@ -10,9 +30,11 @@ import MyCard from '@/components/MyCard.vue';
       </div>
       <ul>
         <MyCard
-          title="Labican"
-          v-for="item in 10"
+          v-for="item in listLaboratorys"
           :key="item"
+          :title="item.nome"
+          :sub-title="item.coordenador_id"
+          :summary="item.sobre"
         />
       </ul>
     </section>
