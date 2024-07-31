@@ -23,6 +23,23 @@ export const userStore = defineStore('user', {
   },
 
   actions: {
+    async setInviteForLab(object: any) {
+      try {
+        const response = await API.post('/usuarios/requestAcessLab', {
+          id_user: object.id_user,
+          id_lab: object.id_lab,
+        }, {
+          headers: {
+            Authorization: `Bearer ${object.token}`,
+          },
+        });
+        if (response.data.status === 201) {
+          return true;
+        }
+      } catch (error: any) {
+        return error.response.data.detail;
+      }
+    },
     changeLabInState(lab: any, index: number) {
       this.laboratorys.forEach((item: any) => {
         if (item.id !== lab.id) {
