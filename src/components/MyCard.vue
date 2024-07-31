@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue';
 import { QCard, QSeparator, QCardSection, QSpinnerDots} from 'quasar';
-// props
+import {userStore} from '@/stores/user';
+import {authStore} from '@/stores/auth';
 
+//state
+const user = userStore();
+const auth = authStore();
+// props
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-defineProps({
+const props = defineProps({
+  idUser:{
+    type: String,
+    required:true,
+  },
+  idLab:{
+    type: String,
+    required:true,
+  },
   title: {
     type: String,
     required: true,
@@ -28,8 +41,26 @@ let loading = ref<Boolean>(false);
 
 // function
 onMounted(async()=> {
-  console.log('Init Component');
+  
 });
+
+async function changeRegistration(){
+  loading.value = true;
+  const object = {
+    id_user: props.idUser,
+    id_lab: props.idLab,
+    token: auth.getToken
+  };
+  const response = await user.setInviteForLab(object);
+  if(response === true){
+    loading.value = false;
+    alert('Pedido enviado!');
+  } else {
+    loading.value = false;
+    alert(response);
+  }
+}
+
 </script>
 <template>
   <q-card
@@ -49,7 +80,7 @@ onMounted(async()=> {
     <q-card-section>
       <article>
         <span>{{ summary }}</span>
-        <button type="submit">
+        <button @click="changeRegistration()">
           <QSpinnerDots
             size="20px"
             color="dark"
