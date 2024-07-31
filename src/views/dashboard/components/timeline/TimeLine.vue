@@ -10,6 +10,7 @@ const lab = labStore();
 const user = userStore();
 // Variables
 let listLaboratorys = ref<any>([]);
+let userData = ref<any>();
 
 // Functions 
 onMounted(async ()=>{
@@ -17,8 +18,8 @@ onMounted(async ()=>{
 });
 
 async function initComponent(){
-  const userAux: any = user.getUser;
-  listLaboratorys.value = await lab.getLaboratorys(userAux?.id);
+  userData.value = user.getUser;
+  listLaboratorys.value = await lab.getLaboratorys(userData.value?.id);
 }
 </script>
 
@@ -32,6 +33,8 @@ async function initComponent(){
         <MyCard
           v-for="item in listLaboratorys"
           :key="item"
+          :id-user="userData.id"
+          :id-lab="item.id"
           :title="item.nome"
           :sub-title="item.coordenador_id"
           :summary="item.sobre"
