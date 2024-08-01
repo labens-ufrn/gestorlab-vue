@@ -149,7 +149,11 @@ export const userStore = defineStore('user', {
       }
     },
     clearUser() {
+      localStorage.setItem('laboratorys', JSON.stringify(null));
+      localStorage.setItem('laboratory', JSON.stringify(null));
       localStorage.removeItem('user');
+      localStorage.removeItem('laboratorys');
+      localStorage.removeItem('laboratory');
     }
   },
 }); 
