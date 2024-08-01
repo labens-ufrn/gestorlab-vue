@@ -8,6 +8,7 @@ const DashBoard = () => import('@/views/dashboard/DashBoard.vue');
 const PedidosAcess = () => import('@/views/dashboard/components/PedidosAcess.vue');
 const Profile = () => import('@/views/dashboard/components/MyProfile.vue');
 const Timeline = () => import('@/views/dashboard/components/timeline/TimeLine.vue');
+const Laboratory = () => import('@/views/dashboard/components/MyLaboratory.vue');
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
         path: 'profile',
         name: 'profile',
         component: Profile,
+      },
+      {
+        path: 'laboratory',
+        name: 'laboratory',
+        component: Laboratory,
       },
     ]
   }
