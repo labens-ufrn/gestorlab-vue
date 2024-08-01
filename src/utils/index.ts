@@ -12,7 +12,7 @@ export function chooseListMenu(option: Number) {
       label: 'Linha do tempo',
       icon: 'view_timeline',
       separator: true,
-      link: ''
+      link: 'time-line'
     },
     {
       label: 'Coordenadores',
@@ -57,19 +57,13 @@ export function chooseListMenu(option: Number) {
       label: 'Linha do tempo',
       icon: 'view_timeline',
       separator: true,
-      link: ''
+      link: 'time-line'
     },
     {
-      label: 'Laboratórios',
+      label: 'Laboratório',
       icon: 'group_work',
       separator: true,
-      link: ''
-    },
-    {
-      label: 'Pedidos de acesso',
-      icon: 'person_add',
-      separator: true,
-      link: ''
+      link: 'laboratory'
     },
     {
       label: 'Membros',
@@ -96,13 +90,13 @@ export function chooseListMenu(option: Number) {
       label: 'Linha do tempo',
       icon: 'view_timeline',
       separator: true,
-      link: ''
+      link: 'time-line'
     },
     {
       label: 'Laboratório',
       icon: 'group_work',
       separator: true,
-      link: ''
+      link: 'laboratory'
     },
     {
       label: 'Projetos',
@@ -123,13 +117,13 @@ export function chooseListMenu(option: Number) {
       label: 'Linha do tempo',
       icon: 'view_timeline',
       separator: true,
-      link: ''
+      link: 'time-line'
     },
     {
       label: 'Laboratório',
       icon: 'group_work',
       separator: true,
-      link: ''
+      link: 'laboratory'
     },
     {
       label: 'Projetos',
