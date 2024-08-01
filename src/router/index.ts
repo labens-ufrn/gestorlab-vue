@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { authStore } from '@/stores/auth';
 import { useLoadingStore } from '@/stores/loading';
+import { userStore } from '@/stores/user';
 
 const HomeViewVue = () => import('@/views/home/HomeView.vue');
 const PageAcess = () => import('@/views/pageAcess/PageAcess.vue');
@@ -9,12 +10,18 @@ const PedidosAcess = () => import('@/views/dashboard/components/PedidosAcess.vue
 const Profile = () => import('@/views/dashboard/components/MyProfile.vue');
 const Timeline = () => import('@/views/dashboard/components/timeline/TimeLine.vue');
 const Laboratory = () => import('@/views/dashboard/components/MyLaboratory.vue');
+const CreateLab = () => import('@/views/createLab/CreateLab.vue');
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeViewVue
+  },
+  {
+    path: '/createLab',
+    name: 'createLab',
+    component: CreateLab,
   },
   {
     path: '/pageAcess',
@@ -60,6 +67,19 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const auth = authStore();
   const loadingStore = useLoadingStore();
+  const user = userStore();
+  function isCoordOrNot() {
+    const usuario: any = user.getUser;
+    if (usuario.permissoes[0].title === 'Coordenador') {
+      if (usuario.primeiro_acesso === true) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     loadingStore.setLoading(true);
@@ -69,9 +89,17 @@ router.beforeEach(async (to, from, next) => {
     if (response === false) {
       next('/pageAcess');
       return;
+    } else {
+      if (isCoordOrNot()) {
+        next('/createLab');
+        return;
+      } else {
+        next();
+      }
     }
   }
   next();
+
 });
 
 export default router;
