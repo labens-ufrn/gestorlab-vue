@@ -174,7 +174,7 @@ async function getInitComponent() {
               />
             </div>
             <q-menu
-              v-if="listLaboratory !== null"
+              v-if="listLaboratory !== null && userLocal.permissoes[0].title !== 'Admin'"
             >
               <q-list style="min-width: 300px; background-color: #1F2026; border: 1px solid #333335">
                 <div class="menu-header">
