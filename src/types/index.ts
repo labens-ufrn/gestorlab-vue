@@ -13,3 +13,12 @@ export interface Imagefile {
   type: string;
   size: number;
 }
+
+export interface CreateLaboratory {
+  nome: string;
+  sobre: string;
+  template: number;
+  descricao: string;
+  email: string;
+  image: string;
+}
