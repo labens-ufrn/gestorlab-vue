@@ -51,9 +51,7 @@ defineEmits(['event']);
 onMounted(async()=> {
   const response:Boolean = await auth.authAutenticate();
   if(response){
-    setTimeout(()=>{
-      handleRouter();
-    }, 1000);
+    handleRouter();
   }else {
     loading.value = false;
   }
