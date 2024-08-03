@@ -14,8 +14,15 @@ let loading = ref<boolean>(false);
 async function sendEmail(){
   loading.value = true;
   const response = await user.sendEmailPasswordRecovery(email.value);
-  alert(response);
-  loading.value = false;
+  if (response === true){
+    loading.value = false;
+    alert('E-mail enviado com sucesso, por favor verifique sua caixa de entrada!');
+  } else {
+    loading.value = false;
+    alert('Erro o enviar e-mail, tem novamente em alguns minutos!');
+  }
+  
+  
 }
 </script>
 <template>

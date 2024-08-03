@@ -136,12 +136,12 @@ export const userStore = defineStore('user', {
     },
     async sendEmailPasswordRecovery(email: string) {
       try {
-        const response = await API.post('/usuarios/sendEmail', {
+        await API.post('/usuarios/sendEmail', {
           email: email
         });
-        return response.data.detail;
+        return true;
       } catch (error: any) {
-        return error.data.detail;
+        return false;
       }
     }
   },
