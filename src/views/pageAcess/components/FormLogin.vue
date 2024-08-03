@@ -31,6 +31,10 @@ function handleRouter() {
   router.push('/dashboard');
 }
 
+function handleRouterSendEmail() {
+  router.push('/sendEmail');
+}
+
 async function login() {
   loading.value = true;
   const formData = new FormData();
@@ -93,7 +97,7 @@ async function login() {
         </span>
       </div>
     </div>
-    <a href="">Esqueceu sua senha?</a>
+    <a @click.prevent="handleRouterSendEmail()">Esqueceu sua senha?</a>
     <button
       type="submit"
       class="button-login"
