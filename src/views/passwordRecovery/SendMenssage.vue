@@ -86,6 +86,7 @@ async function sendEmail(){
   }
 
   button{
+    cursor: pointer;
     border-radius: 0.8rem;
     border: none;
     color: $textColor;
